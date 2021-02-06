@@ -33,7 +33,7 @@ export class RecipeController {
                 recipeIngredient.unitId = unitIds[index];
                 console.log("Created recipe ingredient " + recipeIngredient);
     
-                await this.recipeIngredientRepo.save(recipeToAdd).then(recipeIngredient => {
+                await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
                     console.log("Added recipe ingredient " + recipeIngredient);
                 });
             });
