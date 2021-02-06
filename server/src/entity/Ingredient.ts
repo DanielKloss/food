@@ -11,5 +11,5 @@ export class Ingredient {
     name: string;
 
     @ManyToMany(type => Recipe, recipe => recipe.ingredients)
-    recipe: Recipe[];
+    recipes: Recipe[];
 }
