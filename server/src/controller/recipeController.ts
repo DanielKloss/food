@@ -17,24 +17,24 @@ export class RecipeController {
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
-        console.log("Adding recipe " + recipeToAdd);
+        console.log("Adding recipe " + recipeToAdd.name);
         let recipe = await this.recipeRepo.save(recipeToAdd);
-        console.log("Recipe added " + recipe);
+        console.log("Recipe added " + recipe.name);
         
         for (let index = 0; index < recipeIngredients.length; index++) {
-            console.log("Adding ingredient " + recipeIngredients[index]);
+            console.log("Adding ingredient " + recipeIngredients[index].name);
             await this.ingredientRepo.save(recipeIngredients[index]).then(async ingredient => {
-                console.log("Ingredient added " + ingredient);
+                console.log("Ingredient added " + ingredient.name);
 
                 let recipeIngredient = new RecipeIngredient();
                 recipeIngredient.ingredient = ingredient;
                 recipeIngredient.recipe = recipeToAdd;
                 recipeIngredient.quantity = quantities[index];
                 recipeIngredient.unitId = unitIds[index];
-                console.log("Created recipe ingredient " + recipeIngredient);
+                console.log("Created recipe ingredient " + recipeIngredient.quantity);
     
                 await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
-                    console.log("Added recipe ingredient " + recipeIngredient);
+                    console.log("Added recipe ingredient " + recipeIngredient.quantity);
                 });
             });
         }
