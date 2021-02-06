@@ -7,9 +7,9 @@ import { RecipeIngredient } from "./entity/recipeIngredient";
 createConnection().then(async connection => {
     const queryRunner = connection.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.query("DELETE * FROM recipe_ingredient");
-    await queryRunner.query("DELETE * FROM recipe");
-    await queryRunner.query("DELETE * FROM ingredient");
+    await queryRunner.query("DELETE FROM recipe_ingredient");
+    await queryRunner.query("DELETE FROM recipe");
+    await queryRunner.query("DELETE FROM ingredient");
 
     console.log("Inserting a new recipe into the database")
     const recipe = new Recipe();
