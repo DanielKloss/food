@@ -1,4 +1,4 @@
-import {Entity, Column, ManyToMany, PrimaryColumn, ManyToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { Ingredient } from "./Ingredient";
 import { Recipe } from "./recipe";
 
@@ -24,4 +24,10 @@ export class RecipeIngredient {
     @ManyToOne(type => Ingredient, ingredient => ingredient.recipeIngredient)
     @JoinColumn({name: "ingredientId" })
     ingredient: Ingredient
+
+    @CreateDateColumn()
+    createdDate: Date;
+
+    @UpdateDateColumn()
+    updatedDate: Date;
 }

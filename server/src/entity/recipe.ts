@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { RecipeIngredient } from "./recipeIngredient";
 
 @Entity()
@@ -13,6 +13,12 @@ export class Recipe {
     @Column()
     cookingTime: number;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
+    @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
     recipeIngredient: RecipeIngredient;
+
+    @CreateDateColumn()
+    createdDate: Date;
+
+    @UpdateDateColumn()
+    updatedDate: Date;
 }
