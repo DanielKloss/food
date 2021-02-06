@@ -21,16 +21,16 @@ export class RecipeController {
         let recipe = await this.recipeRepo.save(recipeToAdd);
         console.log("Recipe added " + recipe.name);
         
-        for (const [index, value] of recipeIngredients.entries()) {
-            console.log("Adding ingredient " + value.name);
-            await this.ingredientRepo.save(value).then(async ingredient => {
+        for (let i = 0; i < recipeIngredients.length; i++) {
+            console.log("Adding ingredient " + recipeIngredients[i].name);
+            await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
                 console.log("Ingredient added " + ingredient.name);
 
                 let recipeIngredient = new RecipeIngredient();
                 recipeIngredient.ingredient = ingredient;
                 recipeIngredient.recipe = recipeToAdd;
-                recipeIngredient.quantity = quantities[index];
-                recipeIngredient.unitId = unitIds[index];
+                recipeIngredient.quantity = quantities[i];
+                recipeIngredient.unitId = unitIds[i];
                 console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
     
                 await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
