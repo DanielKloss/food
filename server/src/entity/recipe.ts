@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from "typeorm";
-import { Ingredient } from "./Ingredient";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany} from "typeorm";
+import { RecipeIngredient } from "./recipeIngredient";
 
 @Entity()
 export class Recipe {
@@ -13,7 +13,6 @@ export class Recipe {
     @Column()
     cookingTime: number;
 
-    @ManyToMany(type => Ingredient, ingredient => ingredient.recipes)
-    @JoinTable({ name: 'recipeIngredient', joinColumns:[{name: 'quantity'}] })
-    ingredients: Ingredient[];
+    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
+    recipeIngredient: RecipeIngredient;
 }

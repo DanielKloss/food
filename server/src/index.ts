@@ -2,6 +2,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {Ingredient} from "./entity/Ingredient";
 import { Recipe } from "./entity/recipe";
+import { RecipeIngredient } from "./entity/recipeIngredient";
 
 createConnection().then(async connection => {
     console.log("Inserting a new recipe into the database")
@@ -14,17 +15,24 @@ createConnection().then(async connection => {
     console.log("Inserting a new ingredient into the database...");
     const ingredient = new Ingredient();
     ingredient.name = "Chicken";
-    ingredient.recipes = [recipe]
     await connection.manager.save(ingredient);
     console.log("Saved a new ingredient with id: " + ingredient.id);
 
     console.log("Inserting a new ingredient into the database...");
     const ingredient2 = new Ingredient();
     ingredient2.name = "Water";
-    ingredient2.recipes = [recipe]
     await connection.manager.save(ingredient2);
     console.log("Saved a new ingredient with id: " + ingredient2.id);
 
+    console.log("Inserting RecipeIngredients into the database...");
+    const recipeIngredient = new RecipeIngredient();
+    recipeIngredient.recipe = recipe;
+    recipeIngredient.ingredient = ingredient;
+    recipeIngredient.quantity = 1;
+    recipeIngredient.unitId = 0
+    await connection.manager.save(recipeIngredient);
+    console.log("Saved a new recipeIngredient with id: " + recipeIngredient.recipeId + "/" + recipeIngredient.ingredientId)
+ 
     console.log("Loading ingredients from the database...");
     const ingredients = await connection.manager.find(Ingredient);
     console.log("Loaded ingredients: ", ingredients);
