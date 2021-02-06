@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Recipe } from "../entity/recipe";
@@ -16,18 +17,24 @@ export class RecipeController {
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
-        await this.recipeRepo.save(recipeToAdd);
+        console.log("Adding recipe " + recipeToAdd);
+        let recipe = await this.recipeRepo.save(recipeToAdd);
+        console.log("Recipe added " + recipe);
         
         for (let index = 0; index < recipeIngredients.length; index++) {
+            console.log("Adding ingredient " + recipeIngredients[index]);
             let ingredient = await this.ingredientRepo.save(recipeIngredients[index]);
+            console.log("Ingredient added " + ingredient);
             
             let recipeIngredient = new RecipeIngredient();
             recipeIngredient.ingredient = ingredient;
             recipeIngredient.recipe = recipeToAdd;
             recipeIngredient.quantity = quantities[index];
             recipeIngredient.unitId = unitIds[index];
+            console.log("Created recipe ingredient " + recipeIngredient);
 
             await this.recipeIngredientRepo.save(recipeToAdd);
+            console.log("Added recipe ingredient " + recipeIngredient);
         }
     }
 }

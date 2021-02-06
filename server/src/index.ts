@@ -22,8 +22,12 @@ createConnection().then(connection => {
     var recipe = new Recipe();
     recipe.name = "Chicken Soup";
     recipe.cookingTime = 10;
+
+    console.log("Inserting recipe and associations");
+
     recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [1, 100], [0, 1]);
 
+    console.log("Finished!");
     //Here you can setup and run express/koa/any other framework
 
 }).catch(error => console.log(error));
