@@ -31,7 +31,7 @@ export class RecipeController {
                 recipeIngredient.recipe = recipeToAdd;
                 recipeIngredient.quantity = quantities[index];
                 recipeIngredient.unitId = unitIds[index];
-                console.log("Created recipe ingredient " + recipeIngredient.quantity);
+                console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
     
                 await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
                     console.log("Added recipe ingredient " + recipeIngredient.quantity);
