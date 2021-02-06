@@ -17,7 +17,7 @@ createConnection().then(connection => {
     var ingredient = new Ingredient();
     ingredient.name = "Chicken";
     var ingredient2 = new Ingredient();
-    ingredient.name = "Water";
+    ingredient2.name = "Water";
 
     var recipe = new Recipe();
     recipe.name = "Chicken Soup";
