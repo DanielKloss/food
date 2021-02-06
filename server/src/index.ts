@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import { IngredientController } from "./controller/ingredientController";
 import { RecipeController } from "./controller/recipeController";
 import { Ingredient } from "./entity/Ingredient";
 import { Recipe } from "./entity/recipe";
@@ -8,13 +7,12 @@ import { RecipeIngredient } from "./entity/recipeIngredient";
 
 createConnection().then(connection => {
     const recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient));
-    const ingredientController = new IngredientController(connection.getRepository(Ingredient));
 
-    const queryRunner = connection.createQueryRunner();
-    queryRunner.connect();
-    queryRunner.query("DELETE FROM recipe_ingredient");
-    queryRunner.query("DELETE FROM recipe");
-    queryRunner.query("DELETE FROM ingredient");
+    // const queryRunner = connection.createQueryRunner();
+    // queryRunner.connect();
+    // queryRunner.query("DELETE FROM recipe_ingredient");
+    // queryRunner.query("DELETE FROM recipe");
+    // queryRunner.query("DELETE FROM ingredient");
 
     var ingredient = new Ingredient();
     ingredient.name = "Chicken";
