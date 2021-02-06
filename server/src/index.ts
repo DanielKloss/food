@@ -29,8 +29,8 @@ createConnection().then(async connection => {
     const ingredients = await connection.manager.find(Ingredient);
     console.log("Loaded ingredients: ", ingredients);
 
-    console.log("Loading recipes and their ingredients from the database...")
-    const recipes = await connection.manager.findOne(Recipe, {relations: ["ingredients"]});
+    //console.log("Loading recipes and their ingredients from the database...")
+    //const recipes = await connection.manager.findOne(Recipe, {relations: ["ingredients"]});
 
     //Here you can setup and run express/koa/any other framework
 
