@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { RecipeIngredient } from "./recipeIngredient";
 
-@Entity()
+@Entity({name: "Recipes"})
 export class Recipe {
 
     @PrimaryGeneratedColumn()

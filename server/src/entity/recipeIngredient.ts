@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, 
 import { Ingredient } from "./Ingredient";
 import { Recipe } from "./recipe";
 
-@Entity()
+@Entity({name: "RecipeIngredients"})
 export class RecipeIngredient {
 
     @PrimaryColumn()
