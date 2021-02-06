@@ -21,9 +21,9 @@ export class RecipeController {
         let recipe = await this.recipeRepo.save(recipeToAdd);
         console.log("Recipe added " + recipe.name);
         
-        for (let index = 0; index < recipeIngredients.length; index++) {
-            console.log("Adding ingredient " + recipeIngredients[index].name);
-            await this.ingredientRepo.save(recipeIngredients[index]).then(async ingredient => {
+        for (const [index, value] of recipeIngredients.entries()) {
+            console.log("Adding ingredient " + value.name);
+            await this.ingredientRepo.save(value).then(async ingredient => {
                 console.log("Ingredient added " + ingredient.name);
 
                 let recipeIngredient = new RecipeIngredient();
