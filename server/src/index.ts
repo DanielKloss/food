@@ -9,7 +9,7 @@ createConnection().then(async connection => {
     await queryRunner.connect();
     await queryRunner.query("DROP TABLE recipe_ingredient");
     await queryRunner.query("DROP TABLE recipe");
-    await queryRunner.query("DROP TABLE ingredients");
+    await queryRunner.query("DROP TABLE ingredient");
 
     console.log("Inserting a new recipe into the database")
     const recipe = new Recipe();
