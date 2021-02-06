@@ -19,10 +19,10 @@ export class RecipeController {
         await this.recipeRepo.save(recipeToAdd);
         
         for (let index = 0; index < recipeIngredients.length; index++) {
-            await this.ingredientRepo.save(recipeIngredients[index]);
+            let ingredient = await this.ingredientRepo.save(recipeIngredients[index]);
             
             let recipeIngredient = new RecipeIngredient();
-            recipeIngredient.ingredient = recipeIngredients[index];
+            recipeIngredient.ingredient = ingredient;
             recipeIngredient.recipe = recipeToAdd;
             recipeIngredient.quantity = quantities[index];
             recipeIngredient.unitId = unitIds[index];
