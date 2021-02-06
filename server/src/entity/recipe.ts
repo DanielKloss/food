@@ -14,6 +14,6 @@ export class Recipe {
     cookingTime: number;
 
     @ManyToMany(type => Ingredient, ingredient => ingredient.recipes)
-    @JoinTable()
+    @JoinTable({ name: 'recipeIngredient' })
     ingredients: Ingredient[];
 }

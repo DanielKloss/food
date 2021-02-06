@@ -14,14 +14,14 @@ createConnection().then(async connection => {
     console.log("Inserting a new ingredient into the database...");
     const ingredient = new Ingredient();
     ingredient.name = "Chicken";
-    ingredient.recipe = [recipe]
+    ingredient.recipes = [recipe]
     await connection.manager.save(ingredient);
     console.log("Saved a new ingredient with id: " + ingredient.id);
 
     console.log("Inserting a new ingredient into the database...");
     const ingredient2 = new Ingredient();
     ingredient2.name = "Water";
-    ingredient2.recipe = [recipe]
+    ingredient2.recipes = [recipe]
     await connection.manager.save(ingredient2);
     console.log("Saved a new ingredient with id: " + ingredient2.id);
 
