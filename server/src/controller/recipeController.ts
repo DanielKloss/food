@@ -27,8 +27,8 @@ export class RecipeController {
             console.log("Ingredient added " + ingredient);
             
             let recipeIngredient = new RecipeIngredient();
-            recipeIngredient.ingredient = ingredient;
-            recipeIngredient.recipe = recipeToAdd;
+            recipeIngredient.ingredientId = ingredient.id;
+            recipeIngredient.recipeId = recipe.id;
             recipeIngredient.quantity = quantities[index];
             recipeIngredient.unitId = unitIds[index];
             console.log("Created recipe ingredient " + recipeIngredient);
