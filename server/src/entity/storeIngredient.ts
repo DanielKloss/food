@@ -15,9 +15,6 @@ export class StoreIngredient {
     @Column()
     quantity: number;
 
-    @ManyToOne(type => Unit, unit => unit.storeIngredient)
-    unit: Unit;
-
     @ManyToOne(type => Store, store => store.storeIngredient)
     @JoinColumn({name: "storeId" })
     store: Store

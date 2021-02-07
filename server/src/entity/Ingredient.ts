@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Unique} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Unique, ManyToOne} from "typeorm";
 import { RecipeIngredient } from "./recipeIngredient";
+import { Unit } from "./unit";
 
 @Entity({name: "Ingredients"})
 export class Ingredient {
@@ -9,6 +10,9 @@ export class Ingredient {
 
     @Column()
     name: string;
+
+    @ManyToOne(type => Unit, unit => unit.ingredient)
+    unit: Unit;
 
     @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
     recipeIngredient: RecipeIngredient;

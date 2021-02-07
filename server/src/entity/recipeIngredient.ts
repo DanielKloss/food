@@ -1,7 +1,6 @@
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { Ingredient } from "./Ingredient";
 import { Recipe } from "./recipe";
-import { Unit } from "./unit";
 
 @Entity({name: "RecipeIngredients"})
 export class RecipeIngredient {
@@ -14,9 +13,6 @@ export class RecipeIngredient {
 
     @Column()
     quantity: number;
-
-    @ManyToOne(type => Unit, unit => unit.recipeIngredient)
-    unit: Unit;
 
     @ManyToOne(type => Recipe, recipe => recipe.recipeIngredient)
     @JoinColumn({name: "recipeId" })

@@ -1,4 +1,3 @@
-import { Console } from "console";
 import { Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Recipe } from "../entity/recipe";
@@ -16,29 +15,25 @@ export class RecipeController {
         this.recipeIngredientRepo = recipeIngredientRepository;
     }
 
-    async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
-        await this.recipeRepo.findOne({name: recipeToAdd.name}).then(async found => {
-            if (found != undefined) {
-                recipeToAdd.id = found.id;
+    async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
+        let recipe = await this.recipeRepo.findOne({name: recipeToAdd.name});
+        if (recipe != undefined){
+            throw "Recipe already exists";
+        }
+        await this.recipeRepo.insert(recipeToAdd);
+
+        for (let i = 0; i < recipeIngredients.length; i++) {
+            let ingredient = await this.ingredientRepo.findOne({name: recipeIngredients[i].name})
+            if (ingredient == undefined){
+                await this.ingredientRepo.insert(recipeIngredients[i]);
             }
-            await this.recipeRepo.save(recipeToAdd).then(async () => {
-                for (let i = 0; i < recipeIngredients.length; i++) {
-                    await this.ingredientRepo.findOne({name: recipeIngredients[i].name}).then(async found => {
-                        if (found != undefined) {
-                            recipeIngredients[i].id = found.id;
-                        }
-                        await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
-                            let recipeIngredient = new RecipeIngredient();
-                            recipeIngredient.ingredientId = ingredient.id;
-                            recipeIngredient.recipeId = recipeToAdd.id;
-                            recipeIngredient.quantity = quantities[i];
-                            recipeIngredient.unitId = unitIds[i];
-                            
-                            await this.recipeIngredientRepo.save(recipeIngredient);
-                        });
-                    });
-                }
-            });
-        });
+            
+            let recipeIngredient = new RecipeIngredient();
+            recipeIngredient.ingredientId = recipeIngredients[i].id;
+            recipeIngredient.recipeId = recipeToAdd.id;
+            recipeIngredient.quantity = quantities[i];
+                                
+            await this.recipeIngredientRepo.insert(recipeIngredient);
+        }
     }
 }
