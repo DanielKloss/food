@@ -17,7 +17,8 @@ export class RecipeController {
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
-        recipeToAdd.id = await this.recipeRepo.getId(recipeToAdd)
+        recipeToAdd.id = await this.recipeRepo.getId(recipeToAdd);
+        console.log("Found id! " + recipeToAdd.id);
         console.log("Adding recipe " + recipeToAdd.name);
         let recipe = await this.recipeRepo.save(recipeToAdd);
         console.log("Recipe added " + recipe.name);
