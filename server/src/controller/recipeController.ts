@@ -70,7 +70,7 @@ export class RecipeController {
     }
 
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
-        return await this.recipeRepo.find({where: {name: recipeName}, relations: ["instructions", "ingredients"]});
+        return await this.recipeRepo.find({where: {name: recipeName}, relations: ["instruction", "recipeIngredient"]});
     }
 
     async GetRecipesByTag(tagName: string){
