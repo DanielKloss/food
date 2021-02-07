@@ -64,4 +64,20 @@ export class RecipeController {
             await this.recipeIngredientRepo.save(recipeIngredient);
         }
     }
+
+    async GetAllRecipes(){
+        return await this.recipeRepo.find();
+    }
+
+    async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
+        return await this.recipeRepo.find({where: {name: recipeName}, relations: ["instructions", "ingredients"]});
+    }
+
+    async GetRecipesByTag(tagName: string){
+        return await this.recipeRepo.find({where: {tag: {name: tagName}}});
+    }
+
+    async GetRecipesByIngredient(ingredientName: string){
+        return await this.recipeRepo.find({where: {recipeIngredient: {name: ingredientName}}});
+    }
 }

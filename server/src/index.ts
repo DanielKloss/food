@@ -11,6 +11,12 @@ import { Unit } from "./entity/unit";
 createConnection().then(async connection => {
     const recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient), connection.getRepository(Unit), connection.getRepository(Tag), connection.getRepository(Instruction));
 
+    let recipes = await recipeController.GetAllRecipes();
+
+    for (const recipe of recipes) {
+        console.log(recipe.name + " - " + recipe.cookingTime + " minutes");
+    }
+
     // const queryRunner = connection.createQueryRunner();
     // queryRunner.connect();
     // queryRunner.query("DELETE FROM recipe_ingredient");
@@ -53,41 +59,41 @@ createConnection().then(async connection => {
     // await recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]); 
     // console.log("Finsihed First Insert!");
 
-    var unit = new Unit();
-    unit.name = "Milliliters";
-    unit.symbol = "ml";
+    // var unit = new Unit();
+    // unit.name = "Milliliters";
+    // unit.symbol = "ml";
 
-    var unit2 = new Unit();
-    unit2.name = "Grams";
-    unit2.symbol = "g";
+    // var unit2 = new Unit();
+    // unit2.name = "Grams";
+    // unit2.symbol = "g";
 
-    var tag = new Tag();
-    tag.name = "Lunch";
-    var tag2 = new Tag();
-    tag2.name = "Starter";
+    // var tag = new Tag();
+    // tag.name = "Lunch";
+    // var tag2 = new Tag();
+    // tag2.name = "Starter";
 
-    var instruction = new Instruction();
-    instruction.description = "Boil the water";
-    var instruction2 = new Instruction();
-    instruction2.description = "Add the chicken";
+    // var instruction = new Instruction();
+    // instruction.description = "Boil the water";
+    // var instruction2 = new Instruction();
+    // instruction2.description = "Add the chicken";
 
-    var ingredient = new Ingredient();
-    ingredient.name = "Chicken";
-    ingredient.unit = unit2;
-    var ingredient2 = new Ingredient();
-    ingredient2.name = "Water";
-    ingredient2.unit = unit;
+    // var ingredient = new Ingredient();
+    // ingredient.name = "Chicken";
+    // ingredient.unit = unit2;
+    // var ingredient2 = new Ingredient();
+    // ingredient2.name = "Water";
+    // ingredient2.unit = unit;
 
-    var recipe = new Recipe();
-    recipe.name = "Chicken Soup";
-    recipe.cookingTime = 10;
-    recipe.instruction = [instruction , instruction2];
-    recipe.tag = [tag, tag2];
+    // var recipe = new Recipe();
+    // recipe.name = "Chicken Soup";
+    // recipe.cookingTime = 10;
+    // recipe.instruction = [instruction , instruction2];
+    // recipe.tag = [tag, tag2];
 
-    console.log("Inserting recipe and associations");
+    // console.log("Inserting recipe and associations");
 
-    await recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]);
-    console.log("Finsihed Second Insert!");    
+    // await recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]);
+    // console.log("Finsihed Second Insert!");    
 
     //Here you can setup and run express/koa/any other framework
 
