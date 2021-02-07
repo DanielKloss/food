@@ -21,6 +21,8 @@ export class RecipeController {
             throw "Recipe already exists";
         }
 
+        recipeToAdd.recipeIngredient = [];
+
         for (let i = 0; i < recipeIngredients.length; i++) {
             let ingredient = await this.ingredientRepo.findOne({name: recipeIngredients[i].name})
             if (ingredient == undefined){
