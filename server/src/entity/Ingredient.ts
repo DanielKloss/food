@@ -10,7 +10,7 @@ export class Ingredient {
     @Column()
     name: string;
 
-    @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
+    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
     recipeIngredient: RecipeIngredient;
 
     @CreateDateColumn()

@@ -1,13 +1,13 @@
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { Ingredient } from "./Ingredient";
-import { Recipe } from "./recipe";
+import { Store } from "./store";
 import { Unit } from "./unit";
 
-@Entity({name: "RecipeIngredients"})
-export class RecipeIngredient {
+@Entity({name: "StoreIngredients"})
+export class StoreIngredient {
 
     @PrimaryColumn()
-    recipeId: number;
+    storeId: number;
 
     @PrimaryColumn()
     ingredientId: number;
@@ -15,12 +15,12 @@ export class RecipeIngredient {
     @Column()
     quantity: number;
 
-    @ManyToOne(type => Unit, unit => unit.recipeIngredient)
+    @ManyToOne(type => Unit, unit => unit.storeIngredient)
     unit: Unit;
 
-    @ManyToOne(type => Recipe, recipe => recipe.recipeIngredient)
-    @JoinColumn({name: "recipeId" })
-    recipe: Recipe
+    @ManyToOne(type => Store, store => store.storeIngredient)
+    @JoinColumn({name: "storeId" })
+    store: Store
     
     @ManyToOne(type => Ingredient, ingredient => ingredient.recipeIngredient)
     @JoinColumn({name: "ingredientId" })
