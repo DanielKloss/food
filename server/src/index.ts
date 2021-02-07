@@ -11,7 +11,7 @@ import { Unit } from "./entity/unit";
 createConnection().then(async connection => {
     const recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient), connection.getRepository(Unit), connection.getRepository(Tag), connection.getRepository(Instruction));
 
-    let recipes = await recipeController.GetAllRecipes();
+    let recipes = await recipeController.GetRecipeIngredientsAndInstructionsByName("Chicken Soup");
 
     for (const recipe of recipes) {
         console.log(recipe.name + " - " + recipe.cookingTime + " minutes");
