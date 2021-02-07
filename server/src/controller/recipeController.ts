@@ -30,12 +30,12 @@ export class RecipeController {
             throw "Recipe already exists";
         }
         
-        for (const tag of recipe.tag) {
+        for (const tag of recipeToAdd.tag) {
             let foundTag = await this.tagRepo.findOne({name: tag.name});
             tag.id = foundTag.id;
         }
 
-        for (const instruction of recipe.instruction) {
+        for (const instruction of recipeToAdd.instruction) {
             let foundInstruction = await this.instructionRepo.findOne({description: instruction.description});
             instruction.id = foundInstruction.id;
         }
