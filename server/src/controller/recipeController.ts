@@ -26,18 +26,22 @@ export class RecipeController {
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
         let recipe = await this.recipeRepo.findOne({name: recipeToAdd.name});
-        if (recipe != undefined){
+        if (!recipe){
             throw "Recipe already exists";
         }
         
         for (const tag of recipeToAdd.tag) {
             let foundTag = await this.tagRepo.findOne({name: tag.name});
-            tag.id = foundTag.id;
+            if (foundTag){
+                tag.id = foundTag.id;
+            }
         }
 
         for (const instruction of recipeToAdd.instruction) {
             let foundInstruction = await this.instructionRepo.findOne({description: instruction.description});
-            instruction.id = foundInstruction.id;
+            if (foundInstruction) {
+                instruction.id = foundInstruction.id;
+            }
         }
 
         await this.recipeRepo.save(recipeToAdd);
