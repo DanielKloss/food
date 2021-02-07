@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection, getCustomRepository} from "typeorm";
+import { createConnection } from "typeorm";
 import { RecipeController } from "./controller/recipeController";
 import { Ingredient } from "./entity/Ingredient";
 import { Instruction } from "./entity/instruction";
