@@ -26,11 +26,11 @@ export class RecipeController {
         for (let i = 0; i < recipeIngredients.length; i++) {
             let ingredient = await this.ingredientRepo.findOne({name: recipeIngredients[i].name})
             if (ingredient == undefined){
-                await this.ingredientRepo.save(recipeIngredients[i]);
+                ingredient = await this.ingredientRepo.save(recipeIngredients[i]);
             }
             
             let recipeIngredient = new RecipeIngredient();
-            recipeIngredient.ingredientId = recipeIngredients[i].id;
+            recipeIngredient.ingredientId = ingredient.id;
             recipeIngredient.recipeId = recipeToAdd.id;
             recipeIngredient.quantity = quantities[i];
                                 
