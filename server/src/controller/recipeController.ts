@@ -25,24 +25,30 @@ export class RecipeController {
             console.log("Adding recipe " + recipeToAdd.name);
             let recipe = await this.recipeRepo.save(recipeToAdd);
             console.log("Recipe added " + recipe.name);
-        });
-        
-        for (let i = 0; i < recipeIngredients.length; i++) {
-            console.log("Adding ingredient " + recipeIngredients[i].name);
-            await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
-                console.log("Ingredient added " + ingredient.name);
 
-                let recipeIngredient = new RecipeIngredient();
-                recipeIngredient.ingredient = ingredient;
-                recipeIngredient.recipe = recipeToAdd;
-                recipeIngredient.quantity = quantities[i];
-                recipeIngredient.unitId = unitIds[i];
-                console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
+            for (let i = 0; i < recipeIngredients.length; i++) {
+                await this.ingredientRepo.findOne({name: recipeIngredients[i].name}).then(async found => {
+                    console.log("Found! " + found);
+                    if (found != undefined) {
+                        recipeIngredients[i].id = found.id;
+                    }
+                    console.log("Adding ingredient " + recipeIngredients[i].name);
+                    await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
+                        console.log("Ingredient added " + ingredient.name);
     
-                await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
-                    console.log("Added recipe ingredient " + recipeIngredient.quantity);
+                        let recipeIngredient = new RecipeIngredient();
+                        recipeIngredient.ingredient = ingredient;
+                        recipeIngredient.recipe = recipeToAdd;
+                        recipeIngredient.quantity = quantities[i];
+                        recipeIngredient.unitId = unitIds[i];
+                        console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
+            
+                        await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
+                            console.log("Added recipe ingredient " + recipeIngredient.quantity);
+                        });
+                    });
                 });
-            });
-        }
+            }
+        });
     }
 }
