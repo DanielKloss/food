@@ -51,9 +51,9 @@ export class RecipeController {
             if (ingredient == undefined){
                 let unit = await this.unitRepo.findOne({name: recipeIngredients[i].unit.name})
                 if (unit){
-                    ingredient.unit.id = unit.id;
+                    recipeIngredients[i].unit.id = unit.id;
                 }
-                ingredient = await this.ingredientRepo.save(recipeIngredients[i]);
+                await this.ingredientRepo.save(recipeIngredients[i]);
             }
             
             let recipeIngredient = new RecipeIngredient();
