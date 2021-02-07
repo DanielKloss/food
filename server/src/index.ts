@@ -9,7 +9,7 @@ import { Tag } from "./entity/tag";
 import { Unit } from "./entity/unit";
 
 createConnection().then(connection => {
-    const recipeController = new RecipeController(getCustomRepository(RecipeRepository), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient));
+    const recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient));
 
     // const queryRunner = connection.createQueryRunner();
     // queryRunner.connect();
