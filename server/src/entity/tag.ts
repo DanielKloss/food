@@ -10,7 +10,7 @@ export class Tag {
     @Column()
     name: string;
 
-    @ManyToMany(type => Recipe, recipe => recipe.tag, {cascade: true})
+    @ManyToMany(type => Recipe, recipe => recipe.tag)
     @JoinTable()
     recipe: Recipe[];
 

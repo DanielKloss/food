@@ -11,7 +11,7 @@ export class Store {
     name: string;
 
     @OneToMany(type => StoreIngredient, storeIngredient => storeIngredient.store)
-    storeIngredient: StoreIngredient;
+    storeIngredient: StoreIngredient[];
 
     @CreateDateColumn()
     createdDate: Date;

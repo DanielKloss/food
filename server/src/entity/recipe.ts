@@ -16,13 +16,13 @@ export class Recipe {
     cookingTime: number;
 
     @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
-    recipeIngredient: RecipeIngredient;
+    recipeIngredient: RecipeIngredient[];
 
-    @ManyToMany(type => Instruction)
+    @ManyToMany(type => Instruction, {cascade:true})
     @JoinTable()
     instruction: Instruction[];
 
-    @ManyToMany(type => Tag, tag => tag.recipe)
+    @ManyToMany(type => Tag, tag => tag.recipe, {cascade:true})
     @JoinTable()
     tag: Tag[];
 
