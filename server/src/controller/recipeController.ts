@@ -17,11 +17,15 @@ export class RecipeController {
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
-        recipeToAdd.id = await this.recipeRepo.getId(recipeToAdd);
-        console.log("Found id! " + recipeToAdd.id);
-        console.log("Adding recipe " + recipeToAdd.name);
-        let recipe = await this.recipeRepo.save(recipeToAdd);
-        console.log("Recipe added " + recipe.name);
+        await this.recipeRepo.findOne({name: recipeToAdd.name}).then(async found => {
+            console.log("Found! " + found);
+            if (found != undefined) {
+                recipeToAdd.id = found.id;
+            }
+            console.log("Adding recipe " + recipeToAdd.name);
+            let recipe = await this.recipeRepo.save(recipeToAdd);
+            console.log("Recipe added " + recipe.name);
+        });
         
         for (let i = 0; i < recipeIngredients.length; i++) {
             console.log("Adding ingredient " + recipeIngredients[i].name);
