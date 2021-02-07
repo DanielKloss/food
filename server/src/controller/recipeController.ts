@@ -20,7 +20,6 @@ export class RecipeController {
         if (recipe != undefined){
             throw "Recipe already exists";
         }
-        await this.recipeRepo.save(recipeToAdd);
 
         for (let i = 0; i < recipeIngredients.length; i++) {
             let ingredient = await this.ingredientRepo.findOne({name: recipeIngredients[i].name})
@@ -32,8 +31,9 @@ export class RecipeController {
             recipeIngredient.ingredientId = recipeIngredients[i].id;
             recipeIngredient.recipeId = recipeToAdd.id;
             recipeIngredient.quantity = quantities[i];
-                                
-            await this.recipeIngredientRepo.save(recipeIngredient);
+            recipeToAdd.recipeIngredient.push(recipeIngredient);
         }
+
+        await this.recipeRepo.save(recipeToAdd);
     }
 }
