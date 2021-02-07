@@ -38,4 +38,13 @@ export class IngredientController {
             await this.storeIngredientRepo.save(storeIngredient);
         }
     }
+
+    async UpdateStoreIngredientQuantity(ingredient: Ingredient, store: Store, quantity: number){
+        let storeIngredient = new StoreIngredient();
+        storeIngredient.ingredientId = ingredient.id;
+        storeIngredient.storeId = store.id;
+        storeIngredient.quantity = quantity;
+
+        await this.storeIngredientRepo.save(storeIngredient);
+    }
 }
