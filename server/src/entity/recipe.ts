@@ -22,7 +22,7 @@ export class Recipe {
     @JoinTable()
     instruction: Instruction[];
 
-    @ManyToMany(type => Tag, tag => tag.recipe, {cascade: true})
+    @ManyToMany(type => Tag, tag => tag.recipe)
     @JoinTable()
     tag: Tag[];
 
