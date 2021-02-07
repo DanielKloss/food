@@ -13,7 +13,7 @@ export class Unit {
     @Column()
     symbol: string;
 
-    @OneToMany(type => Ingredient, ingredient => ingredient.unit)
+    @OneToMany(() => Ingredient, ingredient => ingredient.unit)
     ingredient: Ingredient;
 
     @CreateDateColumn()

@@ -15,14 +15,14 @@ export class Recipe {
     @Column()
     cookingTime: number;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
+    @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
     recipeIngredient: RecipeIngredient[];
 
-    @ManyToMany(type => Instruction, instruction => instruction.recipe)
+    @ManyToMany(() => Instruction, instruction => instruction.recipe)
     @JoinTable({name: "RecipeInstructions"})
     instruction: Instruction[];
 
-    @ManyToMany(type => Tag, tag => tag.recipe, {cascade:true})
+    @ManyToMany(() => Tag, tag => tag.recipe)
     @JoinTable({name: "RecipeTags"})
     tag: Tag[];
 

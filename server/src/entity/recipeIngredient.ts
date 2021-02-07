@@ -14,11 +14,11 @@ export class RecipeIngredient {
     @Column()
     quantity: number;
 
-    @ManyToOne(type => Recipe, recipe => recipe.recipeIngredient)
+    @ManyToOne(() => Recipe, recipe => recipe.recipeIngredient)
     @JoinColumn({name: "recipeId" })
     recipe: Recipe
     
-    @ManyToOne(type => Ingredient, ingredient => ingredient.recipeIngredient)
+    @ManyToOne(() => Ingredient, ingredient => ingredient.recipeIngredient)
     @JoinColumn({name: "ingredientId" })
     ingredient: Ingredient
 

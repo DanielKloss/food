@@ -10,7 +10,7 @@ export class Store {
     @Column()
     name: string;
 
-    @OneToMany(type => StoreIngredient, storeIngredient => storeIngredient.store)
+    @OneToMany(() => StoreIngredient, storeIngredient => storeIngredient.store)
     storeIngredient: StoreIngredient[];
 
     @CreateDateColumn()

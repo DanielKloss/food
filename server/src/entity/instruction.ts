@@ -10,7 +10,7 @@ export class Instruction {
     @Column()
     description: string;
 
-    @ManyToMany(type => Recipe, recipe => recipe.instruction, {cascade:true})
+    @ManyToMany(() => Recipe, recipe => recipe.instruction)
     recipe: Recipe[];
 
     @CreateDateColumn()

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Unique, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne} from "typeorm";
 import { RecipeIngredient } from "./recipeIngredient";
 import { Unit } from "./unit";
 
@@ -11,10 +11,10 @@ export class Ingredient {
     @Column()
     name: string;
 
-    @ManyToOne(type => Unit, unit => unit.ingredient, {cascade: true})
+    @ManyToOne(() => Unit, unit => unit.ingredient)
     unit: Unit;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
+    @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
     recipeIngredient: RecipeIngredient;
 
     @CreateDateColumn()
