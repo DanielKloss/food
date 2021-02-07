@@ -8,7 +8,7 @@ import { RecipeIngredient } from "./entity/recipeIngredient";
 import { Tag } from "./entity/tag";
 import { Unit } from "./entity/unit";
 
-createConnection().then(connection => {
+createConnection().then(async connection => {
     const recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient));
 
     // const queryRunner = connection.createQueryRunner();
@@ -50,7 +50,8 @@ createConnection().then(connection => {
 
     console.log("Inserting recipe and associations");
 
-    recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]).then(() => console.log("Finsihed First Insert!"));
+    await recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]); 
+    console.log("Finsihed First Insert!");
 
     var unit = new Unit();
     unit.name = "Milliliters";
@@ -85,7 +86,8 @@ createConnection().then(connection => {
 
     console.log("Inserting recipe and associations");
 
-    recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]).then(() => console.log("Finsihed Second Insert!"));
+    await recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]);
+    console.log("Finsihed Second Insert!");    
 
     //Here you can setup and run express/koa/any other framework
 
