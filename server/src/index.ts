@@ -38,22 +38,19 @@ createConnection().then(connection => {
     var ingredient = new Ingredient();
     ingredient.name = "Vegetable";
     ingredient.unit = unit2;
-    var ingredient3 = new Ingredient();
-    ingredient3.name = "Meat";
-    ingredient3.unit = unit2;
     var ingredient2 = new Ingredient();
     ingredient2.name = "Water";
     ingredient2.unit = unit;
 
     var recipe = new Recipe();
-    recipe.name = "Vegetable and Meat Soup";
+    recipe.name = "Vegetable Soup";
     recipe.cookingTime = 10;
     recipe.instruction = [instruction , instruction2];
     recipe.tag = [tag, tag2];
 
     console.log("Inserting recipe and associations");
 
-    recipeController.InsertRecipe(recipe, [ingredient, ingredient2, ingredient3], [100, 100, 100]).then(() => console.log("Finsihed!"));
+    recipeController.InsertRecipe(recipe, [ingredient, ingredient2], [100, 100]).then(() => console.log("Finsihed!"));
 
     //Here you can setup and run express/koa/any other framework
 
