@@ -15,6 +15,12 @@ createConnection().then(async connection => {
 
     for (const recipe of recipes) {
         console.log(recipe.name + " - " + recipe.cookingTime + " minutes");
+        for (const ingredient of recipe.recipeIngredient) {
+            console.log(ingredient.ingredient.name + " - " + ingredient.quantity + " " + ingredient.ingredient.unit.name);
+        }
+        for (const instruction of recipe.instruction) {
+            console.log(instruction.description);
+        }
     }
 
     // const queryRunner = connection.createQueryRunner();
