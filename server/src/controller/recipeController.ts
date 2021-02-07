@@ -39,10 +39,15 @@ export class RecipeController {
                         let recipeIngredient = new RecipeIngredient();
                         recipeIngredient.ingredient = ingredient;
                         recipeIngredient.recipe = recipeToAdd;
+                        recipeIngredient.ingredientId = ingredient.id;
+                        recipeIngredient.recipeId = recipeToAdd.id;
                         recipeIngredient.quantity = quantities[i];
                         recipeIngredient.unitId = unitIds[i];
                         console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
-            
+                        
+                        // await this.recipeIngredientRepo.findOne({ingredientId: ingredient.id, recipeId: recipeToAdd.id}).then(async found => {
+
+                        // });
                         await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
                             console.log("Added recipe ingredient " + recipeIngredient.quantity);
                         });
