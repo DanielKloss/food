@@ -11,7 +11,7 @@ export class Ingredient {
     @Column()
     name: string;
 
-    @ManyToOne(() => Unit, unit => unit.ingredient)
+    @ManyToOne(() => Unit, unit => unit.ingredient, {cascade: true})
     unit: Unit;
 
     @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)

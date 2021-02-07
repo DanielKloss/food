@@ -18,11 +18,11 @@ export class Recipe {
     @OneToMany(() => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
     recipeIngredient: RecipeIngredient[];
 
-    @ManyToMany(() => Instruction, instruction => instruction.recipe)
+    @ManyToMany(() => Instruction, instruction => instruction.recipe, {cascade: true})
     @JoinTable({name: "RecipeInstructions"})
     instruction: Instruction[];
 
-    @ManyToMany(() => Tag, tag => tag.recipe)
+    @ManyToMany(() => Tag, tag => tag.recipe, {cascade: true})
     @JoinTable({name: "RecipeTags"})
     tag: Tag[];
 
