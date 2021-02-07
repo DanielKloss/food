@@ -26,7 +26,7 @@ export class RecipeController {
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
         let recipe = await this.recipeRepo.findOne({name: recipeToAdd.name});
-        if (!recipe){
+        if (recipe != undefined){
             throw "Recipe already exists";
         }
         
