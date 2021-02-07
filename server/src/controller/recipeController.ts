@@ -53,7 +53,7 @@ export class RecipeController {
                 if (unit){
                     recipeIngredients[i].unit.id = unit.id;
                 }
-                await this.ingredientRepo.save(recipeIngredients[i]);
+                ingredient = await this.ingredientRepo.save(recipeIngredients[i]);
             }
             
             let recipeIngredient = new RecipeIngredient();
