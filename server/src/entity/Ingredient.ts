@@ -11,10 +11,10 @@ export class Ingredient {
     @Column()
     name: string;
 
-    @ManyToOne(type => Unit, unit => unit.ingredient)
+    @ManyToOne(type => Unit, unit => unit.ingredient, {cascade: true})
     unit: Unit;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient, {cascade: ['insert', 'update']})
+    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
     recipeIngredient: RecipeIngredient;
 
     @CreateDateColumn()

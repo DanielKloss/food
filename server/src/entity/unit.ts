@@ -13,7 +13,7 @@ export class Unit {
     @Column()
     symbol: string;
 
-    @OneToMany(type => Ingredient, ingredient => ingredient.unit, {cascade: ['insert', 'update']})
+    @OneToMany(type => Ingredient, ingredient => ingredient.unit, {cascade: true})
     ingredient: Ingredient;
 
     @CreateDateColumn()
