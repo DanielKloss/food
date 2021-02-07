@@ -15,7 +15,7 @@ export class Recipe {
     @Column()
     cookingTime: number;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe, {cascade:true})
+    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
     recipeIngredient: RecipeIngredient[];
 
     @ManyToMany(type => Instruction, {cascade:true})
