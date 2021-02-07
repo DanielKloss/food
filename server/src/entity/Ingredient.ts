@@ -1,7 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Unique} from "typeorm";
 import { RecipeIngredient } from "./recipeIngredient";
 
 @Entity({name: "Ingredients"})
+@Unique("UniqueIgredientName", ["name"])
 export class Ingredient {
 
     @PrimaryGeneratedColumn()
