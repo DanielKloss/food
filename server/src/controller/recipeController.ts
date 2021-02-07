@@ -18,42 +18,27 @@ export class RecipeController {
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[], unitIds: number[]){
         await this.recipeRepo.findOne({name: recipeToAdd.name}).then(async found => {
-            console.log("Found! " + found);
             if (found != undefined) {
                 recipeToAdd.id = found.id;
             }
-            console.log("Adding recipe " + recipeToAdd.name);
-            let recipe = await this.recipeRepo.save(recipeToAdd);
-            console.log("Recipe added " + recipe.name);
-
-            for (let i = 0; i < recipeIngredients.length; i++) {
-                await this.ingredientRepo.findOne({name: recipeIngredients[i].name}).then(async found => {
-                    console.log("Found! " + found);
-                    if (found != undefined) {
-                        recipeIngredients[i].id = found.id;
-                    }
-                    console.log("Adding ingredient " + recipeIngredients[i].name);
-                    await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
-                        console.log("Ingredient added " + ingredient.name);
-    
-                        let recipeIngredient = new RecipeIngredient();
-                        recipeIngredient.ingredient = ingredient;
-                        recipeIngredient.recipe = recipeToAdd;
-                        recipeIngredient.ingredientId = ingredient.id;
-                        recipeIngredient.recipeId = recipeToAdd.id;
-                        recipeIngredient.quantity = quantities[i];
-                        recipeIngredient.unitId = unitIds[i];
-                        console.log("Created recipe ingredient " + recipeIngredient.ingredient.name);
-                        
-                        // await this.recipeIngredientRepo.findOne({ingredientId: ingredient.id, recipeId: recipeToAdd.id}).then(async found => {
-
-                        // });
-                        await this.recipeIngredientRepo.save(recipeIngredient).then(recipeIngredient => {
-                            console.log("Added recipe ingredient " + recipeIngredient.quantity);
+            await this.recipeRepo.save(recipeToAdd).then(async () => {
+                for (let i = 0; i < recipeIngredients.length; i++) {
+                    await this.ingredientRepo.findOne({name: recipeIngredients[i].name}).then(async found => {
+                        if (found != undefined) {
+                            recipeIngredients[i].id = found.id;
+                        }
+                        await this.ingredientRepo.save(recipeIngredients[i]).then(async ingredient => {
+                            let recipeIngredient = new RecipeIngredient();
+                            recipeIngredient.ingredientId = ingredient.id;
+                            recipeIngredient.recipeId = recipeToAdd.id;
+                            recipeIngredient.quantity = quantities[i];
+                            recipeIngredient.unitId = unitIds[i];
+                            
+                            await this.recipeIngredientRepo.save(recipeIngredient);
                         });
                     });
-                });
-            }
+                }
+            });
         });
     }
 }
