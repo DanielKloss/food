@@ -18,12 +18,12 @@ export class Recipe {
     @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.recipe)
     recipeIngredient: RecipeIngredient[];
 
-    @ManyToMany(type => Instruction, {cascade:true})
-    @JoinTable()
+    @ManyToMany(type => Instruction, instruction => instruction.recipe)
+    @JoinTable({name: "RecipeInstructions"})
     instruction: Instruction[];
 
     @ManyToMany(type => Tag, tag => tag.recipe, {cascade:true})
-    @JoinTable()
+    @JoinTable({name: "RecipeTags"})
     tag: Tag[];
 
     @CreateDateColumn()

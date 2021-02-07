@@ -11,7 +11,6 @@ export class Tag {
     name: string;
 
     @ManyToMany(type => Recipe, recipe => recipe.tag)
-    @JoinTable()
     recipe: Recipe[];
 
     @CreateDateColumn()
