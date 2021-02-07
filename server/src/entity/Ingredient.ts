@@ -2,7 +2,6 @@ import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Upd
 import { RecipeIngredient } from "./recipeIngredient";
 
 @Entity({name: "Ingredients"})
-@Unique("UniqueIgredientName", ["name"])
 export class Ingredient {
 
     @PrimaryGeneratedColumn()
