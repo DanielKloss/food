@@ -15,11 +15,11 @@ export class StoreIngredient {
     @Column()
     quantity: number;
 
-    @ManyToOne(type => Store, store => store.storeIngredient)
+    @ManyToOne(type => Store, store => store.storeIngredient, {cascade: true})
     @JoinColumn({name: "storeId" })
     store: Store
     
-    @ManyToOne(type => Ingredient, ingredient => ingredient.recipeIngredient)
+    @ManyToOne(type => Ingredient, ingredient => ingredient.recipeIngredient, {cascade: true})
     @JoinColumn({name: "ingredientId" })
     ingredient: Ingredient
 
