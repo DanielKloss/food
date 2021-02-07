@@ -14,7 +14,7 @@ export class Ingredient {
     @ManyToOne(type => Unit, unit => unit.ingredient)
     unit: Unit;
 
-    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient)
+    @OneToMany(type => RecipeIngredient, recipeIngredient => recipeIngredient.ingredient, {cascade: ['insert']})
     recipeIngredient: RecipeIngredient;
 
     @CreateDateColumn()
