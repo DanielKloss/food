@@ -53,7 +53,7 @@ createConnection().then(connection => {
 
     console.log("Inserting recipe and associations");
 
-    recipeController.InsertRecipe(recipe, [ingredient, ingredient2, ingredient3], [100, 100]).then(() => console.log("Finsihed!"));
+    recipeController.InsertRecipe(recipe, [ingredient, ingredient2, ingredient3], [100, 100, 100]).then(() => console.log("Finsihed!"));
 
     //Here you can setup and run express/koa/any other framework
 
