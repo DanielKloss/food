@@ -22,10 +22,6 @@ createConnection().then(async connection => {
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.get('/', function (req, res){
-        res.send("Hello Recipes");
-    })
-
     app.get('/recipes', recipeController.GetAllRecipes);
 
     app.listen(port, () => {
