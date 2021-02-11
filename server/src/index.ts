@@ -14,6 +14,7 @@ import cors = require("cors");
 
 createConnection().then(() => {
     let recipeRepo = getRepository(Recipe);
+    console.log(recipeRepo);
     let recipeController = new RecipeController(recipeRepo, getRepository(Ingredient), getRepository(RecipeIngredient), getRepository(Unit), getRepository(Tag), getRepository(Instruction));
 
     const app = express();
