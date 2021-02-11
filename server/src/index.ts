@@ -22,6 +22,7 @@ createConnection().then(async connection => {
     app.use(express.json());
     app.use(express.urlencoded());
 
+    console.log(recipeController.recipeRepo);
     app.get('/recipes', recipeController.GetAllRecipes);
 
     app.listen(port, () => {
