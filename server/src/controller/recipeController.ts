@@ -16,13 +16,13 @@ export class RecipeController {
     tagRepo: Repository<Tag>;
     instructionRepo: Repository<Instruction>;
 
-    constructor(){
-        this.recipeRepo = getRepository(Recipe);
-        this.ingredientRepo = getRepository(Ingredient);
-        this.recipeIngredientRepo = getRepository(RecipeIngredient);
-        this.unitRepo = getRepository(Unit);
-        this.tagRepo = getRepository(Tag);
-        this.instructionRepo = getRepository(Instruction);
+    constructor(recipeRepository: Repository<Recipe>, ingredientRepository: Repository<Ingredient>, recipeIngredientRepository: Repository<RecipeIngredient>, unitRepository: Repository<Unit>, tagRepository: Repository<Tag>, instructionRepository: Repository<Instruction>){
+        this.recipeRepo = recipeRepository;
+        this.ingredientRepo = ingredientRepository;
+        this.recipeIngredientRepo = recipeIngredientRepository;
+        this.unitRepo = unitRepository;
+        this.tagRepo = tagRepository;
+        this.instructionRepo = instructionRepository;
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
