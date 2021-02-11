@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { createQueryBuilder, getManager, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
 import { Recipe } from "../entity/recipe";
@@ -70,7 +70,15 @@ export class RecipeController {
     }
 
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
-        return await this.recipeRepo.find({where: {name: recipeName}, relations: ["instruction", "recipeIngredient"]});
+        let recipeId = await (await this.recipeRepo.findOne({name: recipeName})).id;
+        let recipes = await createQueryBuilder("recipe")
+            .leftJoinAndSelect("recipe.recipeIngredient", "ingredient")
+            .leftJoinAndSelect("recipe.instruction", "instruction")
+            .where("ingredient.recipeId = :recipeId", {recipeId: recipeId})
+            .getMany();
+
+        console.log(recipes);
+        return recipes;
     }
 
     async GetRecipesByTag(tagName: string){
