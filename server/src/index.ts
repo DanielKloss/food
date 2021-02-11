@@ -15,7 +15,7 @@ createConnection().then(async connection => {
 
     console.log(recipe);
     for(const instruction of recipe.instruction){
-        console.log(instruction);
+        console.log(instruction.description);
     }
     
 
