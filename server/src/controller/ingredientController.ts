@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { createQueryBuilder, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Store } from "../entity/store";
 import { StoreIngredient } from "../entity/storeIngredient";
@@ -40,11 +40,17 @@ export class IngredientController {
     }
 
     async UpdateStoreIngredientQuantity(ingredient: Ingredient, store: Store, quantity: number){
-        let storeIngredient = new StoreIngredient();
-        storeIngredient.ingredientId = ingredient.id;
-        storeIngredient.storeId = store.id;
-        storeIngredient.quantity = quantity;
+        await createQueryBuilder<StoreIngredient>("StoreIngredient")
+            .update(StoreIngredient)
+            .set({ quantity: quantity })
+            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.id, ingredientId: ingredient.id})
+            .execute();
 
-        await this.storeIngredientRepo.save(storeIngredient);
+        // let storeIngredient = new StoreIngredient();
+        // storeIngredient.ingredientId = ingredient.id;
+        // storeIngredient.storeId = store.id;
+        // storeIngredient.quantity = quantity;
+
+        // await this.storeIngredientRepo.save(storeIngredient);
     }
 }
