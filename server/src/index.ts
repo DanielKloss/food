@@ -14,8 +14,8 @@ createConnection().then(async connection => {
     let recipe = await recipeController.GetRecipeIngredientsAndInstructionsByName("Chicken Soup");
 
     console.log(recipe);
-    for(const ingredient of recipe.recipeIngredient){
-        console.log(ingredient);
+    for(const recipeIngredient of recipe.recipeIngredient){
+        console.log(recipeIngredient.ingredient.name);
     }
     
 
