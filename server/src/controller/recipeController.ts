@@ -90,7 +90,7 @@ export class RecipeController {
         return await createQueryBuilder<Recipe>("Recipe")
         .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
         .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
-        .where("ingredient.ingredientName = :name", {name: ingredientName})
+        .where("ingredient.name = :name", {name: ingredientName})
         .getMany();
     }
 }
