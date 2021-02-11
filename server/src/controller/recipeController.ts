@@ -75,7 +75,7 @@ export class RecipeController {
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
-            .where("recipe.name = :name", {name: recipeName})
+            .where("Recipe.name = :name", {name: recipeName})
             .getOne();
     }
 
