@@ -60,27 +60,28 @@ export class RecipeController {
 
     static async GetAllRecipes(request: Request, response: Response){
         let recipeRepo = getRepository(Recipe);
-        let recipes = await recipeRepo.find();
-        response.send(recipes);
+        response.send(await recipeRepo.find());
     }
 
     static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
-        let recipe = await createQueryBuilder<Recipe>("Recipe")
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("ingredient.unit", "unit")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne()
-        response.send(recipe);
+        );
     }
 
     static async GetRecipesByTag(request: Request, response:Response){
-        let recipes = await createQueryBuilder<Recipe>("Recipe")
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.tag", "tag")
             .where("tag.name = :name", {name: request.body.tagName})
-            .getMany();
-        response.send(recipes);
+            .getMany()
+        );
     }
 
     static async GetRecipesByIngredient(request: Request, response:Response){
