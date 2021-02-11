@@ -72,6 +72,7 @@ export class RecipeController {
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne();
+        console.log();
         response.send(recipe);
     }
 
