@@ -70,7 +70,6 @@ export class RecipeController {
     }
 
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
-        let recipeId = await (await this.recipeRepo.findOne({name: recipeName})).id;
         return await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
