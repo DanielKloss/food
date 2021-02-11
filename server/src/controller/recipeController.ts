@@ -25,26 +25,26 @@ export class RecipeController {
         let unitRepo = getRepository(Unit);
         let recipeIngredientRepo = getRepository(RecipeIngredient);
 
-        let recipe = await recipeRepo.findOne({name: request.body.recipeToAdd.name});
+        let recipe = await recipeRepo.findOne({name: request.body.recipe.name});
         if (recipe != undefined){
             throw "Recipe already exists";
         }
         
-        for (const tag of request.body.recipeToAdd.tag) {
+        for (const tag of request.body.recipe.tag) {
             let foundTag = await tagRepo.findOne({name: tag.name});
             if (foundTag){
                 tag.id = foundTag.id;
             }
         }
 
-        for (const instruction of request.body.recipeToAdd.instruction) {
+        for (const instruction of request.body.recipe.instruction) {
             let foundInstruction = await instructionRepo.findOne({description: instruction.description});
             if (foundInstruction) {
                 instruction.id = foundInstruction.id;
             }
         }
 
-        await recipeRepo.save(request.body.recipeToAdd);
+        await recipeRepo.save(request.body.recipe);
 
         for (let i = 0; i < request.body.recipeIngredients.length; i++) {
             let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredients[i].name})
@@ -63,6 +63,9 @@ export class RecipeController {
                                 
             await recipeIngredientRepo.save(recipeIngredient);
         }
+
+        response.status(200);
+        response.send(request.body.recipe);
     }
 
     static async GetAllRecipes(request: Request, response: Response){
