@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createQueryBuilder, getManager, Repository } from "typeorm";
+import { createQueryBuilder, getManager, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
 import { Recipe } from "../entity/recipe";
@@ -16,13 +16,13 @@ export class RecipeController {
     tagRepo: Repository<Tag>;
     instructionRepo: Repository<Instruction>;
 
-    constructor(recipeRepository: Repository<Recipe>, ingredientRepository: Repository<Ingredient>, recipeIngredientRepository: Repository<RecipeIngredient>, unitRepository: Repository<Unit>, tagRepository: Repository<Tag>, instructionRepository: Repository<Instruction>){
-        this.recipeRepo = recipeRepository;
-        this.ingredientRepo = ingredientRepository;
-        this.recipeIngredientRepo = recipeIngredientRepository;
-        this.unitRepo = unitRepository;
-        this.tagRepo = tagRepository;
-        this.instructionRepo = instructionRepository;
+    constructor(){
+        this.recipeRepo = getRepository(Recipe);
+        this.ingredientRepo = getRepository(Ingredient);
+        this.recipeIngredientRepo = getRepository(RecipeIngredient);
+        this.unitRepo = getRepository(Unit);
+        this.tagRepo = getRepository(Tag);
+        this.instructionRepo = getRepository(Instruction);
     }
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
