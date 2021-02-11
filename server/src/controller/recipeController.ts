@@ -65,6 +65,8 @@ export class RecipeController {
     }
 
     static GetRecipeIngredientsAndInstructionsByName = async (request: Request, response: Response) => {
+        console.log(request.body);
+        console.log(request.body.name);
         let recipe = await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
@@ -72,7 +74,7 @@ export class RecipeController {
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne();
-        console.log();
+        console.log(recipe);
         response.send(recipe);
     }
 
