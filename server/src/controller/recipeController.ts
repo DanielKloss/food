@@ -57,9 +57,9 @@ export class RecipeController {
         }
     }
 
-    async GetAllRecipes(request: Request, response: Response){
-        console.log(this.recipeRepo);
-        let recipes = await this.recipeRepo.find();
+    static GetAllRecipes = async (request: Request, response: Response) => {
+        let recipeRepo = getRepository(Recipe);
+        let recipes = await recipeRepo.find();
         response.send(recipes);
     }
 

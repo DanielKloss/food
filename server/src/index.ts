@@ -11,18 +11,19 @@ import { StoreIngredient } from "./entity/storeIngredient";
 import { Tag } from "./entity/tag";
 import { Unit } from "./entity/unit";
 import cors = require("cors");
+import { Router } from "express";
 
 createConnection().then(async () => {
-    let recipeController = new RecipeController();
     const app = express();
     const port = 8080;
+    const routes = Router;
 
     app.use(cors());
 
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.get('/recipes', recipeController.GetAllRecipes);
+    app.use("/", routes)
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
