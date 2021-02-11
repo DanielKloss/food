@@ -13,7 +13,8 @@ import { Unit } from "./entity/unit";
 import cors = require("cors");
 
 createConnection().then(() => {
-    let recipeController = new RecipeController(getRepository(Recipe), getRepository(Ingredient), getRepository(RecipeIngredient), getRepository(Unit), getRepository(Tag), getRepository(Instruction));
+    let recipeRepo = getRepository(Recipe);
+    let recipeController = new RecipeController(recipeRepo, getRepository(Ingredient), getRepository(RecipeIngredient), getRepository(Unit), getRepository(Tag), getRepository(Instruction));
 
     const app = express();
     const port = 8080;
