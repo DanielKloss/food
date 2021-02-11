@@ -72,8 +72,8 @@ export class RecipeController {
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
         let recipeId = await (await this.recipeRepo.findOne({name: recipeName})).id;
         let recipes = await createQueryBuilder("Recipe")
-            .leftJoinAndSelect("recipe.recipeIngredient", "ingredient")
-            .leftJoinAndSelect("recipe.instruction", "instruction")
+            .leftJoinAndSelect("Recipe.recipeIngredient", "ingredient")
+            .leftJoinAndSelect("Recipe.instruction", "instruction")
             .where("ingredient.recipeId = :recipeId", {recipeId: recipeId})
             .getMany();
 
