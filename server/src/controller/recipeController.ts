@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { request } from "http";
 import { createQueryBuilder, getConnection, getManager, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
@@ -58,14 +58,13 @@ export class RecipeController {
         }
     }
 
-    static async GetAllRecipes(request: Request, response: Response) {
+    static async GetAllRecipes(request: Request, response: Response){
         let recipeRepo = getRepository(Recipe);
         let recipes = await recipeRepo.find();
         response.send(recipes);
     }
 
-    static GetRecipeIngredientsAndInstructionsByName = async (request: Request, response: Response) => {
-        console.log(request.body);
+    static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
         let recipe = await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
@@ -73,8 +72,6 @@ export class RecipeController {
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne()
-
-        console.log(recipe);
         response.send(recipe);
     }
 
@@ -86,11 +83,13 @@ export class RecipeController {
         response.send(recipes);
     }
 
-    async GetRecipesByIngredient(ingredientName: string){
-        return await createQueryBuilder<Recipe>("Recipe")
-        .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
-        .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
-        .where("ingredient.name = :name", {name: ingredientName})
-        .getMany();
+    static async GetRecipesByIngredient(request: Request, response:Response){
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
+            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
+            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
+            .where("ingredient.name = :name", {name: request.body.ingredientName})
+            .getMany()
+        );
     }
 }

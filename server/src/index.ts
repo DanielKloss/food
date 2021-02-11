@@ -24,7 +24,8 @@ createConnection().then(async () => {
 
     app.get("/recipes", RecipeController.GetAllRecipes);
     app.get("/recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
-    app.get("/recipeByTag", RecipeController.GetRecipesByTag);
+    app.get("/recipesByTag", RecipeController.GetRecipesByTag);
+    app.get("/recipesByIngredient", RecipeController.GetRecipesByIngredient);
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
