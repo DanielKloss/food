@@ -20,7 +20,6 @@ createConnection().then(async connection => {
     for (const instruction of recipe.instruction) {
         console.log(instruction.description);
     }
-    }
 
     // const queryRunner = connection.createQueryRunner();
     // queryRunner.connect();
