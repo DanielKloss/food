@@ -12,8 +12,8 @@ import { Tag } from "./entity/tag";
 import { Unit } from "./entity/unit";
 import cors = require("cors");
 
-createConnection().then(async connection => {
-    let recipeController = new RecipeController(connection.getRepository(Recipe), connection.getRepository(Ingredient), connection.getRepository(RecipeIngredient), connection.getRepository(Unit), connection.getRepository(Tag), connection.getRepository(Instruction));
+createConnection().then(async () => {
+    let recipeController = new RecipeController();
     const app = express();
     const port = 8080;
 
@@ -22,7 +22,6 @@ createConnection().then(async connection => {
     app.use(express.json());
     app.use(express.urlencoded());
 
-    console.log(recipeController.recipeRepo);
     app.get('/recipes', recipeController.GetAllRecipes);
 
     app.listen(port, () => {

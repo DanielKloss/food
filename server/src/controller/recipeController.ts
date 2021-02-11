@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createQueryBuilder, getManager, getRepository, Repository } from "typeorm";
+import { createQueryBuilder, getConnection, getManager, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
 import { Recipe } from "../entity/recipe";
@@ -9,21 +9,12 @@ import { Unit } from "../entity/unit";
 
 export class RecipeController {
 
-    recipeRepo: Repository<Recipe>;
-    ingredientRepo: Repository<Ingredient>;
-    recipeIngredientRepo: Repository<RecipeIngredient>;
-    unitRepo: Repository<Unit>;
-    tagRepo: Repository<Tag>;
-    instructionRepo: Repository<Instruction>;
-    
-    constructor(recipeRepository: Repository<Recipe>, ingredientRepository: Repository<Ingredient>, recipeIngredientRepository: Repository<RecipeIngredient>, unitRepository: Repository<Unit>, tagRepository: Repository<Tag>, instructionRepository: Repository<Instruction>){
-        this.recipeRepo = recipeRepository;
-        this.ingredientRepo = ingredientRepository;
-        this.recipeIngredientRepo = recipeIngredientRepository;
-        this.unitRepo = unitRepository;
-        this.tagRepo = tagRepository;
-        this.instructionRepo = instructionRepository;
-    }
+    recipeRepo = getConnection().getRepository(Recipe);
+    ingredientRepo = getConnection().getRepository(Ingredient);
+    recipeIngredientRepo = getConnection().getRepository(RecipeIngredient);
+    unitRepo = getConnection().getRepository(Unit);
+    tagRepo = getConnection().getRepository(Tag);
+    instructionRepo = getConnection().getRepository(Instruction);
 
     async InsertRecipe(recipeToAdd: Recipe, recipeIngredients: Ingredient[], quantities: number[]){
         let recipe = await this.recipeRepo.findOne({name: recipeToAdd.name});
