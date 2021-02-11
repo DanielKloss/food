@@ -58,7 +58,7 @@ export class RecipeController {
         }
     }
 
-    static GetAllRecipes = async (request: Request, response: Response) => {
+    static async GetAllRecipes(request: Request, response: Response) {
         let recipeRepo = getRepository(Recipe);
         let recipes = await recipeRepo.find();
         response.send(recipes);
@@ -72,18 +72,18 @@ export class RecipeController {
             .innerJoinAndSelect("ingredient.unit", "unit")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
-            .getOne().then(()=>{
-                console.log(recipe);
-            });
-        
+            .getOne()
+
+        console.log(recipe);
         response.send(recipe);
     }
 
-    async GetRecipesByTag(tagName: string){
-        return await createQueryBuilder<Recipe>("Recipe")
+    async GetRecipesByTag(request: Request, response:Response){
+        let recipes = await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.tag", "tag")
-            .where("tag.name = :name", {name: tagName})
+            .where("tag.name = :name", {name: request.body.tagName})
             .getMany();
+        response.send(recipes);
     }
 
     async GetRecipesByIngredient(ingredientName: string){
