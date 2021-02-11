@@ -20,8 +20,8 @@ createConnection().then(async connection => {
     
 
     console.log(recipe.name + " - " + recipe.cookingTime + " minutes");
-    for (const ingredient of recipe.recipeIngredient) {
-        console.log(ingredient.ingredient.name + " - " + ingredient.quantity + " " + ingredient.ingredient.unit.name);
+    for (const recipeIngredient of recipe.recipeIngredient) {
+        console.log(recipeIngredient.ingredient.name + " - " + recipeIngredient.quantity + " " + recipeIngredient.ingredient.unit.name);
     }
     for (const instruction of recipe.instruction) {
         console.log(instruction.description);
