@@ -73,7 +73,7 @@ export class RecipeController {
         let recipeId = await (await this.recipeRepo.findOne({name: recipeName})).id;
         return await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
-            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient", "ingredient.ingredientId = recipeIngredient.ingredientId")
+            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: recipeName})
             .getOne();
