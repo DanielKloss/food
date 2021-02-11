@@ -13,7 +13,7 @@ createConnection().then(async connection => {
 
     let recipes = await recipeController.GetRecipesByTag("Starter");
     for (const recipe of recipes) {
-        console.log(recipe);
+        console.log(recipe.name);
     }
 
     // let recipe = await recipeController.GetRecipeIngredientsAndInstructionsByName("Chicken Soup");    
