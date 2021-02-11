@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { request } from "http";
 import { createQueryBuilder, getConnection, getManager, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
@@ -63,13 +64,13 @@ export class RecipeController {
         response.send(recipes);
     }
 
-    async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
+    static GetRecipeIngredientsAndInstructionsByName = async (request: Request, response: Response) => {
         return await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("ingredient.unit", "unit")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
-            .where("Recipe.name = :name", {name: recipeName})
+            .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne();
     }
 

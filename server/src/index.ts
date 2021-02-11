@@ -23,6 +23,7 @@ createConnection().then(async () => {
     app.use(express.urlencoded());
 
     app.get("/recipes", RecipeController.GetAllRecipes);
+    app.get("/recipeByName/:name", RecipeController.GetRecipeIngredientsAndInstructionsByName);
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
