@@ -65,13 +65,14 @@ export class RecipeController {
     }
 
     static GetRecipeIngredientsAndInstructionsByName = async (request: Request, response: Response) => {
-        return await createQueryBuilder<Recipe>("Recipe")
+        let recipe = await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("ingredient.unit", "unit")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .where("Recipe.name = :name", {name: request.body.recipeName})
             .getOne();
+        response.send(recipe);
     }
 
     async GetRecipesByTag(tagName: string){
