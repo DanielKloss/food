@@ -78,7 +78,7 @@ export class RecipeController {
         response.send(recipe);
     }
 
-    async GetRecipesByTag(request: Request, response:Response){
+    static async GetRecipesByTag(request: Request, response:Response){
         let recipes = await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.tag", "tag")
             .where("tag.name = :name", {name: request.body.tagName})
