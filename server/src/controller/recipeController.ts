@@ -58,7 +58,7 @@ export class RecipeController {
             
             let recipeIngredient = new RecipeIngredient();
             recipeIngredient.ingredientId = ingredient.id;
-            recipeIngredient.recipeId = request.body.recipeToAdd.id;
+            recipeIngredient.recipeId = request.body.recipe.id;
             recipeIngredient.quantity = request.body.quantities[i];
                                 
             await recipeIngredientRepo.save(recipeIngredient);
