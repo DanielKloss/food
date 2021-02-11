@@ -16,14 +16,14 @@ import { Router } from "express";
 createConnection().then(async () => {
     const app = express();
     const port = 8080;
-    const routes = Router;
+    const router = Router();
 
     app.use(cors());
 
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.use("/", routes)
+    router.get("/recipes", RecipeController.GetAllRecipes);
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
