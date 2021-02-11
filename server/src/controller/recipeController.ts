@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { createQueryBuilder, getManager, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
@@ -65,8 +66,9 @@ export class RecipeController {
         }
     }
 
-    async GetAllRecipes(){
-        return await this.recipeRepo.find();
+    async GetAllRecipes(request: Request, response: Response){
+        let recipes = await this.recipeRepo.find();
+        response.send(recipes);
     }
 
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
