@@ -71,14 +71,11 @@ export class RecipeController {
 
     async GetRecipeIngredientsAndInstructionsByName(recipeName: string){
         let recipeId = await (await this.recipeRepo.findOne({name: recipeName})).id;
-        let recipes = await createQueryBuilder("Recipe")
-            .leftJoinAndSelect("Recipe.recipeIngredient", "ingredient")
-            .leftJoinAndSelect("Recipe.instruction", "instruction")
+        return await createQueryBuilder<Recipe>("recipe")
+            .leftJoinAndSelect("recipe.recipeIngredient", "ingredient")
+            .leftJoinAndSelect("recipe.instruction", "instruction")
             .where("ingredient.recipeId = :recipeId", {recipeId: recipeId})
-            .getMany();
-
-        console.log(recipes);
-        return recipes;
+            .getOne();
     }
 
     async GetRecipesByTag(tagName: string){
