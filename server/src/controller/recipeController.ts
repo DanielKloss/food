@@ -1,5 +1,5 @@
-import { Request, response, Response } from "express";
-import { createQueryBuilder, getConnection, getManager, getRepository, Repository } from "typeorm";
+import { Request, Response } from "express";
+import { createQueryBuilder, getRepository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
 import { Recipe } from "../entity/recipe";
@@ -60,7 +60,7 @@ export class RecipeController {
         response.send(request.body.recipe);
     }
 
-    static async GetAllRecipes(request: Request, response: Response){
+    static async GetAllRecipes(response: Response){
         let recipeRepo = getRepository(Recipe);
         response.send(await recipeRepo.find());
     }

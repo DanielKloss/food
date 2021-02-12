@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { createQueryBuilder, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
-import { Store } from "../entity/store";
 import { StoreIngredient } from "../entity/storeIngredient";
 import { Unit } from "../entity/unit";
 
@@ -37,7 +36,7 @@ export class IngredientController {
         response.send(ingredient);
     }
 
-    async UpdateStoreIngredientQuantity(request: Request, response: Response){
+    static async UpdateStoreIngredientQuantity(request: Request, response: Response){
         response.send(await createQueryBuilder<StoreIngredient>("StoreIngredient")
             .update(StoreIngredient)
             .set({ quantity: request.body.quantity })

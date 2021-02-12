@@ -1,7 +1,6 @@
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import { Ingredient } from "./Ingredient";
 import { Store } from "./store";
-import { Unit } from "./unit";
 
 @Entity({name: "StoreIngredients"})
 export class StoreIngredient {
