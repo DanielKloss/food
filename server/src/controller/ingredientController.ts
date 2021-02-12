@@ -37,8 +37,6 @@ export class IngredientController {
         response.send(ingredient);
     }
 
-    ingredient: Ingredient, store: Store, quantity: number
-
     async UpdateStoreIngredientQuantity(request: Request, response: Response){
         response.send(await createQueryBuilder<StoreIngredient>("StoreIngredient")
             .update(StoreIngredient)
