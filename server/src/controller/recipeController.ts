@@ -1,5 +1,4 @@
 import { Request, response, Response } from "express";
-import { request } from "http";
 import { createQueryBuilder, getConnection, getManager, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { Instruction } from "../entity/instruction";
@@ -9,13 +8,6 @@ import { Tag } from "../entity/tag";
 import { Unit } from "../entity/unit";
 
 export class RecipeController {
-
-    recipeRepo = getConnection().getRepository(Recipe);
-    ingredientRepo = getConnection().getRepository(Ingredient);
-    recipeIngredientRepo = getConnection().getRepository(RecipeIngredient);
-    unitRepo = getConnection().getRepository(Unit);
-    tagRepo = getConnection().getRepository(Tag);
-    instructionRepo = getConnection().getRepository(Instruction);
 
     static async InsertRecipe(request: Request, response: Response){
         let recipeRepo = getRepository(Recipe);
