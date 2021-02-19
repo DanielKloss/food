@@ -60,13 +60,9 @@ export class RecipeController {
         response.send(request.body.recipe);
     }
 
-    static async GetAllRecipes(response: Response){
-        console.log("Finding recipes");
+    static async GetAllRecipes(request: Request, response: Response){
         let recipeRepo = getRepository(Recipe);
-        console.log("got repo " + recipeRepo);
-        let recipes = await recipeRepo.find();
-        console.log(recipes);
-        response.send(recipes);
+        response.send(await recipeRepo.find());
     }
 
     static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
