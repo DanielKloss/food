@@ -64,7 +64,9 @@ export class RecipeController {
         console.log("Finding recipes");
         let recipeRepo = getRepository(Recipe);
         console.log("got repo " + recipeRepo);
-        response.send(await recipeRepo.find());
+        let recipes = await recipeRepo.find();
+        console.log(recipes);
+        response.send(recipes);
     }
 
     static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
