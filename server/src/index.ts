@@ -14,14 +14,14 @@ createConnection().then(async () => {
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.get("/api/recipes", RecipeController.GetAllRecipes);
-    app.get("/api/recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
-    app.get("/api/recipesByTag", RecipeController.GetRecipesByTag);
-    app.get("/api/recipesByIngredient", RecipeController.GetRecipesByIngredient);
-    app.post("/api/recipe", RecipeController.InsertRecipe);
+    app.get("/recipes", RecipeController.GetAllRecipes);
+    app.get("/recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
+    app.get("/recipesByTag", RecipeController.GetRecipesByTag);
+    app.get("/recipesByIngredient", RecipeController.GetRecipesByIngredient);
+    app.post("/recipe", RecipeController.InsertRecipe);
 
-    app.post("/api/ingredient", IngredientController.InsertIngredient);
-    app.put("/api/stroreIngredients", IngredientController.UpdateStoreIngredientQuantity);
+    app.post("/ingredient", IngredientController.InsertIngredient);
+    app.put("/stroreIngredients", IngredientController.UpdateStoreIngredientQuantity);
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
