@@ -1,5 +1,3 @@
-#!/bin/bash
-
 import "reflect-metadata";
 import express = require("express");
 import cors = require("cors");
