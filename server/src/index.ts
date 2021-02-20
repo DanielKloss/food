@@ -4,6 +4,7 @@ import cors = require("cors");
 import { createConnection } from "typeorm";
 import { RecipeController } from "./controller/recipeController";
 import { IngredientController } from "./controller/ingredientController";
+import { StoreController } from "./controller/storeController";
 
 createConnection().then(async () => {
     const app = express();
@@ -19,6 +20,8 @@ createConnection().then(async () => {
     app.get("/api/recipesByTag", RecipeController.GetRecipesByTag);
     app.get("/api/recipesByIngredient", RecipeController.GetRecipesByIngredient);
     app.post("/api/recipe", RecipeController.InsertRecipe);
+
+    app.get("/api/stores", StoreController.GetAllStores);
 
     app.post("/api/ingredient", IngredientController.InsertIngredient);
     app.put("/api/stroreIngredients", IngredientController.UpdateStoreIngredientQuantity);
