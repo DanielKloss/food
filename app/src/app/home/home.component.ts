@@ -18,6 +18,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeService.getRecipes().subscribe(data => this.recipes = data);
-    this.storeService.getStores().subscribe(data => {this.stores = data; console.log(data)});
+    this.storeService.getStoresAndQuantities().subscribe(data => {this.stores = data; console.log(data)});
   }
 }

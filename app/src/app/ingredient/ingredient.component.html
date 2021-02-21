@@ -1,0 +1,33 @@
+<p>
+    <mat-form-field appearance="standard">
+        <mat-label>Ingredient Name</mat-label>
+        <input matInput [(ngModel)]="ingredientToAdd.name" placeholder="Ingredient Name" autocomplete="off">
+    </mat-form-field>
+</p>
+<p>
+    <mat-form-field appearance="standard">
+        <mat-label>Unit Measured In</mat-label>
+        <input matInput [(ngModel)]="ingredientToAdd.unit.name" placeholder="Unit Name" autocomplete="off">
+    </mat-form-field>
+</p>
+<p>
+    <mat-form-field appearance="standard">
+        <mat-label>Unit Measured In Symbol</mat-label>
+        <input matInput [(ngModel)]="ingredientToAdd.unit.symbol" placeholder="Unit Symbol" autocomplete="off">
+    </mat-form-field>
+</p>
+<p *ngFor="let store of storeAmountsToAdd">
+    <mat-form-field appearance="standard">
+        <mat-label>{{store.name}} Quantity</mat-label>
+        <input matInput [(ngModel)]="store.quantity" placeholder="Any in the {{store.name}}?" autocomplete="off">
+    </mat-form-field>
+</p>
+<p>
+    <button mat-raised-button color="primary" (click)="insertIngredient()">Add Ingredient</button>
+</p>
+
+<mat-grid-list cols="6" rowHeight="100px">
+    <mat-grid-tile *ngFor="let ingredient of ingredients">
+        {{ingredient.name}}
+    </mat-grid-tile>
+</mat-grid-list>
