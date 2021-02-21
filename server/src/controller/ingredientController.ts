@@ -6,7 +6,7 @@ import { Unit } from "../entity/unit";
 
 export class IngredientController {
 
-    static async getAllIngredients(request: Request, resposne: Response) {
+    static async getAllIngredients(request: Request, response: Response) {
         let ingredientRepo = getRepository(Ingredient);
         response.send(await ingredientRepo.find({
             order: {
