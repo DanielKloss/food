@@ -1,10 +1,19 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { createQueryBuilder, getRepository, Repository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { StoreIngredient } from "../entity/storeIngredient";
 import { Unit } from "../entity/unit";
 
 export class IngredientController {
+
+    static async getAllIngredients(request: Request, resposne: Response) {
+        let ingredientRepo = getRepository(Ingredient);
+        response.send(await ingredientRepo.find({
+            order: {
+                name: "ASC"
+            }
+        }));
+    }
 
     static async InsertIngredient(request: Request, response: Response){
         let ingredientRepo = getRepository(Ingredient);
