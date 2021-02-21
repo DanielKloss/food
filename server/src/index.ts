@@ -22,6 +22,7 @@ createConnection().then(async () => {
     app.post("/api/recipe", RecipeController.InsertRecipe);
 
     app.get("/api/stores", StoreController.GetAllStores);
+    app.get("/api/storesAndQuantities", StoreController.GetAllStoresAndQuantities);
 
     app.get("/api/ingredients", IngredientController.getAllIngredients)
     app.post("/api/ingredient", IngredientController.InsertIngredient);
