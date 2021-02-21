@@ -33,12 +33,14 @@ export class IngredientController {
         let ingredient = await ingredientRepo.save(request.body.ingredient);
 
         for (const storeAmount of request.body.storeAmounts) {
-            let storeIngredient = new StoreIngredient();
-            storeIngredient.ingredientId = ingredient.id;
-            storeIngredient.storeId = storeAmount.id;
-            storeIngredient.quantity = storeAmount.quantity;
+            if (storeAmount.quantity != undefined && storeAmount.quantity > 0){
+                let storeIngredient = new StoreIngredient();
+                storeIngredient.ingredientId = ingredient.id;
+                storeIngredient.storeId = storeAmount.id;
+                storeIngredient.quantity = storeAmount.quantity;
 
-            await storeIngredientRepo.save(storeIngredient);
+                await storeIngredientRepo.save(storeIngredient);
+            }
         }
 
         response.status(200);
