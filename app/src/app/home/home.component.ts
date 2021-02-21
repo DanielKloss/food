@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from '../models/recipe';
+import { Store } from '../models/store';
+import { RecipeService } from '../services/recipe.service';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  stores: Store[];
+  recipes: Recipe[];
+
+  constructor(private recipeService: RecipeService, private storeService: StoreService) { }
 
   ngOnInit(): void {
+    this.recipeService.getRecipes().subscribe(data => this.recipes = data);
+    this.storeService.getStores().subscribe(data => {this.stores = data; console.log(data)});
   }
-
 }

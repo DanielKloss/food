@@ -1,1 +1,18 @@
-<p>home works!</p>
+<mat-card *ngFor="let store of stores">
+    <mat-card-header>
+        <mat-card-title>{{store.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-chip-list>
+            <mat-chip *ngFor="let storeIngredient of store.storeIngredient">
+                {{storeIngredient.ingredient.name}} - {{storeIngredient.quantity}}{{storeIngredient.ingredient.unit.symbol}}
+            </mat-chip>
+        </mat-chip-list>
+    </mat-card-content>
+</mat-card>
+
+<mat-grid-list cols="6" rowHeight="100px">
+    <mat-grid-tile *ngFor="let recipe of recipes">
+    {{recipe.name}}
+    </mat-grid-tile>
+</mat-grid-list>
