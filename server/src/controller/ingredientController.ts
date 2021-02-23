@@ -11,7 +11,6 @@ export class IngredientController {
         .innerJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
         .innerJoinAndSelect("storeIngredient.store", "store")
         .innerJoinAndSelect("Ingredient.unit", "unit")
-        .orderBy("Ingredient.name", "ASC")
         .getMany();
 
         console.log(ingredients);
