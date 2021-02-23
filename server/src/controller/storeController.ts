@@ -15,7 +15,7 @@ export class StoreController {
             .innerJoinAndSelect("Store.storeIngredient", "storeIngredient")
             .innerJoinAndSelect("storeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("ingredient.unit", "unit")
-            .orderBy("Ingredient.name")
+            .orderBy("ingredient.name")
             .getMany()
         );
     }
