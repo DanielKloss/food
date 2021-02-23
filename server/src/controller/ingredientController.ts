@@ -10,7 +10,7 @@ export class IngredientController {
         response.send(
             await createQueryBuilder<Ingredient>("Ingredient")
             .innerJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
-            .innerJoinAndSelect("storeIngredient.ingredient", "store")
+            .innerJoinAndSelect("storeIngredient.store", "store")
             .innerJoinAndSelect("ingredient.unit", "unit")
             .orderBy("name", "ASC")
             .getMany()
