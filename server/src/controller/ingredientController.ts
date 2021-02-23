@@ -7,12 +7,14 @@ import { Unit } from "../entity/unit";
 export class IngredientController {
 
     static async getAllIngredients(request: Request, response: Response) {
-        let ingredientRepo = getRepository(Ingredient);
-        response.send(await ingredientRepo.find({
-            order: {
-                name: "ASC"
-            }
-        }));
+        response.send(
+            await createQueryBuilder<Ingredient>("Ingredient")
+            .innerJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
+            .innerJoinAndSelect("storeIngredient.ingredient", "store")
+            .innerJoinAndSelect("ingredient.unit", "unit")
+            .orderBy("name", "ASC")
+            .getMany()
+        );
     }
 
     static async InsertIngredient(request: Request, response: Response){
