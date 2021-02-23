@@ -11,8 +11,8 @@ export class IngredientController {
             await createQueryBuilder<Ingredient>("Ingredient")
             .innerJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
             .innerJoinAndSelect("storeIngredient.store", "store")
-            .innerJoinAndSelect("ingredient.unit", "unit")
-            .orderBy("name", "ASC")
+            .innerJoinAndSelect("Ingredient.unit", "unit")
+            .orderBy("Ingredient.name", "ASC")
             .getMany()
         );
     }
