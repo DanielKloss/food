@@ -7,15 +7,14 @@ import { Unit } from "../entity/unit";
 export class IngredientController {
 
     static async getAllIngredients(request: Request, response: Response) {
-        let ingredients = await createQueryBuilder<Ingredient>("Ingredient")
-        .innerJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
-        .innerJoinAndSelect("storeIngredient.store", "store")
-        .innerJoinAndSelect("Ingredient.unit", "unit")
-        .getMany();
-
-        console.log(ingredients);
-
-        response.send(ingredients);
+        response.send(
+            await createQueryBuilder<Ingredient>("Ingredient")
+            .leftJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
+            .leftJoinAndSelect("storeIngredient.store", "store")
+            .innerJoinAndSelect("Ingredient.unit", "unit")
+            .orderBy("Ingredient.name", "ASC")
+            .getMany()
+        );
     }
 
     static async InsertIngredient(request: Request, response: Response){
