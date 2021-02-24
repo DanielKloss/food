@@ -20,6 +20,7 @@ export class IngredientController {
     }
 
     static async UpdateStoreIngredientQuantity(request: Request, response: Response){
+        util.inspect(request.body, false, null, true);
         for (const storeIngredient of request.body.storeIngredient) {
             let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
                 .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
