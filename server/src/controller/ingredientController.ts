@@ -12,7 +12,7 @@ export class IngredientController {
             .leftJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
             .leftJoinAndSelect("storeIngredient.store", "store")
             .innerJoinAndSelect("Ingredient.unit", "unit")
-            .where("ingredient.id = :id", { id: request.params["ingredientId"] })
+            .where("ingredient.id = :id", { id: request.query.ingredientId })
             .getOne()
         )
     }
