@@ -17,7 +17,8 @@ export class IngredientController {
         )
     }
 
-    static async UpdateStoreIngredientQuantity(request: Request, response: Response){
+    static async UpsertStoreIngredientQuantity(request: Request, response: Response){
+        console.log(request.body);
         let storeIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
             .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
             .getOne();
@@ -30,8 +31,12 @@ export class IngredientController {
                 .execute()
             );
         } else {
-            response.status(200);
-            response.send();
+            let storeIngredientRepo = getRepository(StoreIngredient);
+            let storeIngredient = new StoreIngredient();
+            storeIngredient.ingredientId = request.body.ingredientId;
+            storeIngredient.storeId = request.body.storeId;
+            storeIngredient.quantity = request.body.quantity;
+            response.send(await storeIngredientRepo.save(storeIngredient));
         }
     }
 
