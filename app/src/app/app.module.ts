@@ -13,17 +13,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { IngredientComponent } from './ingredient/ingredient.component';
+import { IngredientDialog } from './dialogs/ingredient.dialog';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     HomeComponent,
-    IngredientComponent
+    IngredientDialog
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,9 @@ import { IngredientComponent } from './ingredient/ingredient.component';
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

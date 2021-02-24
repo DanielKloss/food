@@ -1,9 +1,9 @@
 import { Ingredient } from "./ingredient";
 import { Store } from "./store";
 
-export class StoreIngredient {
+export class IngredientStore {
     constructor(
         public quantity: number,
-        public ingredient: Ingredient
+        public store: Store
     ){ }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '../models/store';
-import { StoreAmount } from '../models/storeAmount';
+import { StoreIngredient } from '../models/storeIngredient';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class StoreService {
   constructor(private http: HttpClient) { }
 
   getStores() {
-    return this.http.get<StoreAmount[]>("http://192.168.0.229/api/stores");
+    return this.http.get<StoreIngredient[]>("http://192.168.0.229/api/stores");
   }
 
   getStoresAndQuantities(): Observable<Store[]>{

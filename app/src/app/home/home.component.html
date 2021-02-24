@@ -4,7 +4,7 @@
     </mat-card-header>
     <mat-card-content>
         <mat-chip-list>
-            <mat-chip *ngFor="let storeIngredient of store.storeIngredient">
+            <mat-chip *ngFor="let storeIngredient of store.storeIngredient" (click)="openIngredientChange(storeIngredient)">
                 {{storeIngredient.ingredient.name}} - {{storeIngredient.quantity}}{{storeIngredient.ingredient.unit.symbol}}
             </mat-chip>
         </mat-chip-list>
