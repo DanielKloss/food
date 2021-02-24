@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createQueryBuilder, getRepository } from "typeorm";
+import { createQueryBuilder, getRepository, QueryBuilder } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { StoreIngredient } from "../entity/storeIngredient";
 import { Unit } from "../entity/unit";
@@ -15,6 +15,24 @@ export class IngredientController {
             .where("Ingredient.id = :id", { id: request.query.ingredientId })
             .getOne()
         )
+    }
+
+    static async UpdateStoreIngredientQuantity(request: Request, response: Response){
+        let storeIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
+            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
+            .getOne();
+
+        if(storeIngredient != undefined){
+            response.send(await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                .update(StoreIngredient)
+                .set({ quantity: request.body.quantity })
+                .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
+                .execute()
+            );
+        } else {
+            response.status(200);
+            response.send();
+        }
     }
 
     static async getAllIngredients(request: Request, response: Response) {
@@ -60,12 +78,5 @@ export class IngredientController {
         response.send(ingredient);
     }
 
-    static async UpdateStoreIngredientQuantity(request: Request, response: Response){
-        response.send(await createQueryBuilder<StoreIngredient>("StoreIngredient")
-            .update(StoreIngredient)
-            .set({ quantity: request.body.quantity })
-            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
-            .execute()
-        );
-    }
+    
 }

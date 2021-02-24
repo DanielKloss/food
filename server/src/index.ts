@@ -25,6 +25,7 @@ createConnection().then(async () => {
     app.get("/api/storesAndQuantities", StoreController.GetAllStoresAndQuantities);
 
     app.get("/api/ingredientAndStores", IngredientController.getIngredientandStores);
+    app.get("/api/updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
 
     app.get("/api/ingredients", IngredientController.getAllIngredients)
     app.post("/api/ingredient", IngredientController.InsertIngredient);
