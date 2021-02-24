@@ -20,7 +20,7 @@ export class IngredientController {
     }
 
     static async UpdateStoreIngredientQuantity(request: Request, response: Response){
-        util.inspect(request.body, false, null, true);
+        console.log(util.inspect(request.body, false, null, true));
         for (const storeIngredient of request.body.storeIngredient) {
             let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
                 .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
@@ -28,7 +28,7 @@ export class IngredientController {
 
             if(storeIngredient.quantity == 0 || storeIngredient.quantity == null || storeIngredient.quantity == undefined){
                 if (exisitingStoreIngredient != undefined){
-                    console.log("zero ingredient that exists - " + storeIngredient.store.id);
+                    console.log("zero ingredient that exists - " + util.inspect(storeIngredient.store, false, null, true));
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                     .delete()
                     .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
@@ -36,7 +36,7 @@ export class IngredientController {
                 }
             } else {
                 if(exisitingStoreIngredient != undefined){
-                    console.log("Non zero ingredient that exists - " + storeIngredient.store.id);
+                    console.log("Non zero ingredient that exists - " + util.inspect(storeIngredient.store, false, null, true));
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                         .update(StoreIngredient)
                         .set({ quantity: request.body.quantity })
