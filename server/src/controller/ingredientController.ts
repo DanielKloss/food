@@ -46,12 +46,10 @@ export class IngredientController {
                     console.log("Non zero ingredient that doesnt exist - " + util.inspect(storeIngredient.store, false, null, true));
                     let storeIngredientRepo = getRepository(StoreIngredient);
                     let newStoreIngredient = new StoreIngredient();
-                    console.log(request.body.id);
                     newStoreIngredient.ingredientId = request.body.id;
-                    console.log(newStoreIngredient.ingredientId);
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
-                    await storeIngredientRepo.save(storeIngredient)
+                    await storeIngredientRepo.save(newStoreIngredient)
                 }
             }
         }
