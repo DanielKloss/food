@@ -18,26 +18,30 @@ export class IngredientController {
     }
 
     static async UpsertStoreIngredientQuantity(request: Request, response: Response){
-        console.log(request.body);
-        let storeIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
-            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
+        console.log(request.body.storeIngredient[1].store);
+        for (const store of request.body.storeIngredient) {
+            let storeIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
+            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.storeId, ingredientId: request.body.id})
             .getOne();
 
-        if(storeIngredient != undefined){
-            response.send(await createQueryBuilder<StoreIngredient>("StoreIngredient")
-                .update(StoreIngredient)
-                .set({ quantity: request.body.quantity })
-                .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: request.body.storeId, ingredientId: request.body.ingredientId})
-                .execute()
-            );
-        } else {
-            let storeIngredientRepo = getRepository(StoreIngredient);
-            let storeIngredient = new StoreIngredient();
-            storeIngredient.ingredientId = request.body.ingredientId;
-            storeIngredient.storeId = request.body.storeId;
-            storeIngredient.quantity = request.body.quantity;
-            response.send(await storeIngredientRepo.save(storeIngredient));
+            if(storeIngredient != undefined){
+                await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                    .update(StoreIngredient)
+                    .set({ quantity: request.body.quantity })
+                    .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.storeId, ingredientId: request.body.id})
+                    .execute()
+            } else {
+                let storeIngredientRepo = getRepository(StoreIngredient);
+                let storeIngredient = new StoreIngredient();
+                storeIngredient.ingredientId = request.body.id;
+                storeIngredient.storeId = store.storeId;
+                storeIngredient.quantity = store.quantity;
+                await storeIngredientRepo.save(storeIngredient)
+            }
         }
+
+        response.status(200);
+        response.send();
     }
 
     static async getAllIngredients(request: Request, response: Response) {
