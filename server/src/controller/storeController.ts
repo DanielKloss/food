@@ -12,9 +12,9 @@ export class StoreController {
     static async GetAllStoresAndQuantities(request: Request, response: Response){
         response.send(
             await createQueryBuilder<Store>("Store")
-            .innerJoinAndSelect("Store.storeIngredient", "storeIngredient")
-            .innerJoinAndSelect("storeIngredient.ingredient", "ingredient")
-            .innerJoinAndSelect("ingredient.unit", "unit")
+            .leftJoinAndSelect("Store.storeIngredient", "storeIngredient")
+            .leftJoinAndSelect("storeIngredient.ingredient", "ingredient")
+            .leftJoinAndSelect("ingredient.unit", "unit")
             .orderBy("ingredient.name")
             .getMany()
         );

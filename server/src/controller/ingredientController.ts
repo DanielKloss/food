@@ -1,5 +1,5 @@
-import { Request, response, Response } from "express";
-import { createQueryBuilder, getRepository, Repository } from "typeorm";
+import { Request, Response } from "express";
+import { createQueryBuilder, getRepository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { StoreIngredient } from "../entity/storeIngredient";
 import { Unit } from "../entity/unit";
@@ -11,7 +11,7 @@ export class IngredientController {
             await createQueryBuilder<Ingredient>("Ingredient")
             .leftJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
             .leftJoinAndSelect("storeIngredient.store", "store")
-            .innerJoinAndSelect("Ingredient.unit", "unit")
+            .leftJoinAndSelect("Ingredient.unit", "unit")
             .where("Ingredient.id = :id", { id: request.query.ingredientId })
             .getOne()
         )
