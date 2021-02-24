@@ -20,7 +20,6 @@ export class IngredientController {
     }
 
     static async UpdateStoreIngredientQuantity(request: Request, response: Response){
-        console.log(util.inspect(request.body, false, null, true));
         for (const storeIngredient of request.body.storeIngredient) {
             let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
                 .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
@@ -58,18 +57,8 @@ export class IngredientController {
         response.send();
     }
 
-    static async getAllIngredients(request: Request, response: Response) {
-        response.send(
-            await createQueryBuilder<Ingredient>("Ingredient")
-            .leftJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
-            .leftJoinAndSelect("storeIngredient.store", "store")
-            .innerJoinAndSelect("Ingredient.unit", "unit")
-            .orderBy("Ingredient.name", "ASC")
-            .getMany()
-        );
-    }
-
     static async InsertIngredient(request: Request, response: Response){
+        console.log(util.inspect(request.body, false, null, true));
         let ingredientRepo = getRepository(Ingredient);
         let unitRepo = getRepository(Unit);
         let storeIngredientRepo = getRepository(StoreIngredient);
