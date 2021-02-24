@@ -48,6 +48,7 @@ export class IngredientController {
                     let newStoreIngredient = new StoreIngredient();
                     console.log(request.body.id);
                     newStoreIngredient.ingredientId = request.body.id;
+                    console.log(newStoreIngredient.ingredientId);
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
                     await storeIngredientRepo.save(storeIngredient)
