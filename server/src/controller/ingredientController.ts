@@ -25,6 +25,7 @@ export class IngredientController {
 
             if(store.quantity == 0 || store.quantity == null || store.quantity == undefined){
                 if (storeIngredient != undefined){
+                    console.log("zero ingredient that exists - " + store.store.storeId);
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                     .delete()
                     .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.store.storeId, ingredientId: request.body.id})
@@ -32,12 +33,14 @@ export class IngredientController {
                 }
             } else {
                 if(storeIngredient != undefined){
+                    console.log("Non zero ingredient that exists - " + store.store.storeId);
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                         .update(StoreIngredient)
                         .set({ quantity: request.body.quantity })
                         .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.store.storeId, ingredientId: request.body.id})
                         .execute()
                 } else {
+                    console.log("Non zero ingredient that doesnt exist - " + store.store.storeId);
                     let storeIngredientRepo = getRepository(StoreIngredient);
                     let storeIngredient = new StoreIngredient();
                     storeIngredient.ingredientId = request.body.id;
