@@ -6,6 +6,17 @@ import { Unit } from "../entity/unit";
 
 export class IngredientController {
 
+    static async getIngredientandStores(request: Request, response: Response){
+        response.send(
+            await createQueryBuilder<Ingredient>("Ingredient")
+            .leftJoinAndSelect("Ingredient.storeIngredient", "storeIngredient")
+            .leftJoinAndSelect("storeIngredient.store", "store")
+            .innerJoinAndSelect("Ingredient.unit", "unit")
+            .where("ingredient.id = :id", { id: request.params["ingredientId"] })
+            .getOne()
+        )
+    }
+
     static async getAllIngredients(request: Request, response: Response) {
         response.send(
             await createQueryBuilder<Ingredient>("Ingredient")
