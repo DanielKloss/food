@@ -39,8 +39,8 @@ export class IngredientController {
                     console.log("Non zero ingredient that exists - " + util.inspect(storeIngredient.store, false, null, true));
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                         .update(StoreIngredient)
-                        .set({ quantity: request.body.quantity })
-                        .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
+                        .set({ quantity: storeIngredient.quantity })
+                        .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id })
                         .execute()
                 } else {
                     console.log("Non zero ingredient that doesnt exist - " + util.inspect(storeIngredient.store, false, null, true));
