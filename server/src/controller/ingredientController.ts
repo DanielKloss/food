@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { createQueryBuilder, getRepository, QueryBuilder } from "typeorm";
+import { createQueryBuilder, getRepository } from "typeorm";
 import { Ingredient } from "../entity/Ingredient";
 import { StoreIngredient } from "../entity/storeIngredient";
 import { Unit } from "../entity/unit";
+
+const util = require('util')
 
 export class IngredientController {
 
@@ -40,7 +42,7 @@ export class IngredientController {
                         .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.storeId, ingredientId: request.body.id})
                         .execute()
                 } else {
-                    console.log("Non zero ingredient that doesnt exist - " + storeIngredient.store.json());
+                    console.log("Non zero ingredient that doesnt exist - " + util.inspect(storeIngredient.store, false, null, true));
                     let storeIngredientRepo = getRepository(StoreIngredient);
                     let newStoreIngredient = new StoreIngredient();
                     newStoreIngredient.ingredientId = request.body.id;
