@@ -27,10 +27,6 @@ createConnection().then(async () => {
     app.get("/api/ingredientAndStores", IngredientController.getIngredientandStores);
     app.get("/api/updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
 
-    app.get("/api/ingredients", IngredientController.getAllIngredients)
-    app.post("/api/ingredient", IngredientController.InsertIngredient);
-    app.put("/api/stroreIngredients", IngredientController.UpdateStoreIngredientQuantity);
-
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
     })
