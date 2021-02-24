@@ -17,26 +17,34 @@ export class IngredientController {
         )
     }
 
-    static async UpsertStoreIngredientQuantity(request: Request, response: Response){
-        console.log(request.body.storeIngredient[1].store);
+    static async UpdateStoreIngredientQuantity(request: Request, response: Response){
         for (const store of request.body.storeIngredient) {
             let storeIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
-            .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.storeId, ingredientId: request.body.id})
-            .getOne();
+                .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.store.storeId, ingredientId: request.body.id})
+                .getOne();
 
-            if(storeIngredient != undefined){
-                await createQueryBuilder<StoreIngredient>("StoreIngredient")
-                    .update(StoreIngredient)
-                    .set({ quantity: request.body.quantity })
-                    .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.storeId, ingredientId: request.body.id})
+            if(store.quantity == 0 || store.quantity == null || store.quantity == undefined){
+                if (storeIngredient != undefined){
+                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                    .delete()
+                    .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.store.storeId, ingredientId: request.body.id})
                     .execute()
+                }
             } else {
-                let storeIngredientRepo = getRepository(StoreIngredient);
-                let storeIngredient = new StoreIngredient();
-                storeIngredient.ingredientId = request.body.id;
-                storeIngredient.storeId = store.storeId;
-                storeIngredient.quantity = store.quantity;
-                await storeIngredientRepo.save(storeIngredient)
+                if(storeIngredient != undefined){
+                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                        .update(StoreIngredient)
+                        .set({ quantity: request.body.quantity })
+                        .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: store.store.storeId, ingredientId: request.body.id})
+                        .execute()
+                } else {
+                    let storeIngredientRepo = getRepository(StoreIngredient);
+                    let storeIngredient = new StoreIngredient();
+                    storeIngredient.ingredientId = request.body.id;
+                    storeIngredient.storeId = store.store.storeId;
+                    storeIngredient.quantity = store.quantity;
+                    await storeIngredientRepo.save(storeIngredient)
+                }
             }
         }
 
