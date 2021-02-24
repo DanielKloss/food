@@ -40,7 +40,7 @@ export class IngredientController {
                         .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.storeId, ingredientId: request.body.id})
                         .execute()
                 } else {
-                    console.log("Non zero ingredient that doesnt exist - " + storeIngredient.store);
+                    console.log("Non zero ingredient that doesnt exist - " + storeIngredient.store.json());
                     let storeIngredientRepo = getRepository(StoreIngredient);
                     let newStoreIngredient = new StoreIngredient();
                     newStoreIngredient.ingredientId = request.body.id;
