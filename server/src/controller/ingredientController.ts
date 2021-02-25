@@ -8,6 +8,38 @@ const util = require('util')
 
 export class IngredientController {
 
+    static async UpdateIngredient(storeIngredients: StoreIngredient[], ingredientId: number){
+        for (const storeIngredient of storeIngredients) {
+            let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: ingredientId})
+                .getOne();
+
+            if(storeIngredient.quantity == 0 || storeIngredient.quantity == null || storeIngredient.quantity == undefined){
+                if (exisitingStoreIngredient != undefined){
+                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                    .delete()
+                    .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: ingredientId})
+                    .execute()
+                }
+            } else {
+                if(exisitingStoreIngredient != undefined){
+                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
+                        .update(StoreIngredient)
+                        .set({ quantity: storeIngredient.quantity })
+                        .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: ingredientId })
+                        .execute()
+                } else {
+                    let storeIngredientRepo = getRepository(StoreIngredient);
+                    let newStoreIngredient = new StoreIngredient();
+                    newStoreIngredient.ingredientId = ingredientId;
+                    newStoreIngredient.storeId = storeIngredient.store.id;
+                    newStoreIngredient.quantity = storeIngredient.quantity;
+                    await storeIngredientRepo.save(newStoreIngredient)
+                }
+            }
+        }
+    }
+
     static async getIngredientandStores(request: Request, response: Response){
         response.send(
             await createQueryBuilder<Ingredient>("Ingredient")
@@ -20,38 +52,8 @@ export class IngredientController {
     }
 
     static async UpdateStoreIngredientQuantity(request: Request, response: Response){
-        for (const storeIngredient of request.body.storeIngredient) {
-            let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
-                .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
-                .getOne();
-
-            if(storeIngredient.quantity == 0 || storeIngredient.quantity == null || storeIngredient.quantity == undefined){
-                if (exisitingStoreIngredient != undefined){
-                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
-                    .delete()
-                    .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id})
-                    .execute()
-                }
-            } else {
-                if(exisitingStoreIngredient != undefined){
-                    await createQueryBuilder<StoreIngredient>("StoreIngredient")
-                        .update(StoreIngredient)
-                        .set({ quantity: storeIngredient.quantity })
-                        .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: request.body.id })
-                        .execute()
-                } else {
-                    let storeIngredientRepo = getRepository(StoreIngredient);
-                    let newStoreIngredient = new StoreIngredient();
-                    newStoreIngredient.ingredientId = request.body.id;
-                    newStoreIngredient.storeId = storeIngredient.store.id;
-                    newStoreIngredient.quantity = storeIngredient.quantity;
-                    await storeIngredientRepo.save(newStoreIngredient)
-                }
-            }
-        }
-
         response.status(200);
-        response.send();
+        response.send(await IngredientController.UpdateIngredient(request.body.storeIngredient, request.body.id));
     }
 
     static async InsertIngredient(request: Request, response: Response){
@@ -82,7 +84,7 @@ export class IngredientController {
             response.send(ingredient);
         } else {
             response.status(200);
-            response.send();
+            response.send(await IngredientController.UpdateIngredient(request.body.storeIngredient, request.body.id));
         }
     }
 }
