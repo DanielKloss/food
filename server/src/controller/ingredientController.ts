@@ -87,6 +87,7 @@ export class IngredientController {
             response.send(ingredient);
         } else {
             response.status(200);
+            console.log(util.inspect(request.body, false, null, true));
             response.send(await IngredientController.UpdateIngredient(request.body.storeIngredient, request.body.id));
         }
     }
