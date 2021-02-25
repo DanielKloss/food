@@ -8,6 +8,8 @@ const util = require('util')
 
 export class IngredientController {
 
+//util.inspect(newStoreIngredient, false, null, true)
+
     static async UpdateIngredient(storeIngredients: StoreIngredient[], ingredientId: number){
         for (const storeIngredient of storeIngredients) {
             let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
@@ -16,7 +18,6 @@ export class IngredientController {
 
             if(storeIngredient.quantity == 0 || storeIngredient.quantity == null || storeIngredient.quantity == undefined){
                 if (exisitingStoreIngredient != undefined){
-                    console.log("Store Ingredient 0 and exists - deleting");
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                     .delete()
                     .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: ingredientId})
@@ -24,7 +25,6 @@ export class IngredientController {
                 }
             } else {
                 if(exisitingStoreIngredient != undefined){
-                    console.log("Store Ingredient > 0 and exists - updating");
                     await createQueryBuilder<StoreIngredient>("StoreIngredient")
                         .update(StoreIngredient)
                         .set({ quantity: storeIngredient.quantity })
@@ -36,7 +36,6 @@ export class IngredientController {
                     newStoreIngredient.ingredientId = ingredientId;
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
-                    console.log("Store Ingredient > 0 and doesn't exist - inserting " + util.inspect(newStoreIngredient, false, null, true));
                     await storeIngredientRepo.save(newStoreIngredient)
                 }
             }
@@ -87,8 +86,7 @@ export class IngredientController {
             response.send(ingredient);
         } else {
             response.status(200);
-            console.log(util.inspect(request.body, false, null, true));
-            response.send(await IngredientController.UpdateIngredient(request.body.storeIngredient, request.body.id));
+            response.send(await IngredientController.UpdateIngredient(request.body.storeIngredient, foundIngredient.id));
         }
     }
 }
