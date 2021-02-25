@@ -63,10 +63,11 @@ export class RecipeController {
     static async GetAllRecipes(request: Request, response: Response){
         response.send(
             await createQueryBuilder<Recipe>("Recipe")
-            .innerJoinAndSelect("Recipe.tag", "tag")
-            .innerJoinAndSelect("Recipe.instruction", "instruction")
+            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
             .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
             .innerJoinAndSelect("ingredient.unit", "unit")
+            .innerJoinAndSelect("Recipe.instruction", "instruction")
+            .innerJoinAndSelect("Recipe.tag", "tag")
             .getMany()
         );
     }
