@@ -61,6 +61,7 @@ export class IngredientController {
         let storeIngredientRepo = getRepository(StoreIngredient);
 
         let foundIngredient = await ingredientRepo.findOne({name: request.body.name});
+        console.log(foundIngredient);
         if (foundIngredient != undefined){
             console.log("ingredient doesnt exist - adding new one");
             let unit = await unitRepo.findOne({name: request.body.unit.name})
