@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IngredientDialog } from '../dialogs/ingredient.dialog';
+import { Ingredient } from '../models/ingredient';
 import { IngredientStore } from '../models/ingredientStore';
 import { Recipe } from '../models/recipe';
 import { Store } from '../models/store';
 import { StoreIngredient } from '../models/storeIngredient';
+import { Unit } from '../models/unit';
 import { IngredientService } from '../services/ingredient.service';
 import { RecipeService } from '../services/recipe.service';
 import { StoreService } from '../services/store.service';
@@ -35,11 +37,11 @@ export class HomeComponent implements OnInit {
       }
 
       const dialogRef = this.dialog.open(IngredientDialog, {
-        width: '250px',
+        width: '300px',
         data: data
       });
   
-      dialogRef.afterClosed().subscribe(async result => {
+      dialogRef.afterClosed().subscribe(result => {
         if(result != undefined){
           this.ingredientService.updateIngredient(result).subscribe(() => {
             this.storeService.getStoresAndQuantities().subscribe(data => this.stores = data);
@@ -47,5 +49,20 @@ export class HomeComponent implements OnInit {
         }
       });
      }); 
-  }   
+  }
+
+  addIngredient(storeToAddTo: Store): void {
+    const dialogRef = this.dialog.open(IngredientDialog, {
+      width: '300px',
+      data: new Ingredient(0, "", new Unit("", ""), [new IngredientStore(0, storeToAddTo)])
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        this.ingredientService.insertIngredient(result).subscribe(() => {
+          this.storeService.getStoresAndQuantities().subscribe(data => this.stores = data);
+        });
+      }
+    });
+  }
 }

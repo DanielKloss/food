@@ -55,34 +55,26 @@ export class IngredientController {
     }
 
     static async InsertIngredient(request: Request, response: Response){
-        console.log(util.inspect(request.body, false, null, true));
         let ingredientRepo = getRepository(Ingredient);
         let unitRepo = getRepository(Unit);
         let storeIngredientRepo = getRepository(StoreIngredient);
 
         let foundIngredient = await ingredientRepo.findOne({name: request.body.name});
-        console.log(foundIngredient);
         if (foundIngredient == undefined){
-            console.log("ingredient doesnt exist - adding new one");
             let unit = await unitRepo.findOne({name: request.body.unit.name})
             if (unit){
-                console.log("unit exists already - assigning id");
                 request.body.unit.id = unit.id;
             }
 
-            console.log("saving ingredient");
             let ingredient = await ingredientRepo.save(request.body);
-            console.log("ingredient saved " + ingredient.name);
 
             for (const storeIngredient of request.body.storeIngredient) {
                 if (storeIngredient.quantity != undefined && storeIngredient.quantity > 0){
-                    console.log("store ingredient more than 0")
                     let newStoreIngredient = new StoreIngredient();
                     newStoreIngredient.ingredientId = ingredient.id;
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
 
-                    console.log("adding store ingredient");
                     await storeIngredientRepo.save(newStoreIngredient);
                 }
             }
@@ -92,9 +84,5 @@ export class IngredientController {
             response.status(200);
             response.send();
         }
-
-        
     }
-
-    
 }

@@ -1,5 +1,17 @@
-<h1 mat-dialog-title>Edit {{data.name}}</h1>
+<h1 mat-dialog-title>Add/ Edit Ingredient</h1>
 <div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Ingredient Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Units Measured In</mat-label>
+    <input matInput [(ngModel)]="data.unit.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Units Symbol</mat-label>
+    <input matInput [(ngModel)]="data.unit.symbol">
+  </mat-form-field>
   <mat-form-field *ngFor="let storeIngredient of data.storeIngredient">
     <mat-label>{{storeIngredient.store.name}}</mat-label>
     <input matInput [(ngModel)]="storeIngredient.quantity">
