@@ -36,7 +36,7 @@ export class IngredientController {
                     newStoreIngredient.ingredientId = ingredientId;
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
-                    console.log("Store Ingredient > 0 and doesn't exist - inserting " + newStoreIngredient);
+                    console.log("Store Ingredient > 0 and doesn't exist - inserting " + util.inspect(newStoreIngredient, false, null, true));
                     await storeIngredientRepo.save(newStoreIngredient)
                 }
             }
