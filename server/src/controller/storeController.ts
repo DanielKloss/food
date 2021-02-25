@@ -15,7 +15,7 @@ export class StoreController {
             .leftJoinAndSelect("Store.storeIngredient", "storeIngredient")
             .leftJoinAndSelect("storeIngredient.ingredient", "ingredient")
             .leftJoinAndSelect("ingredient.unit", "unit")
-            .orderBy("ingredient.name")
+            .orderBy("Store.name")
             .getMany()
         );
     }

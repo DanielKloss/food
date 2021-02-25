@@ -68,6 +68,7 @@ export class RecipeController {
             .innerJoinAndSelect("ingredient.unit", "unit")
             .innerJoinAndSelect("Recipe.instruction", "instruction")
             .innerJoinAndSelect("Recipe.tag", "tag")
+            .orderBy("Recipe.name")
             .getMany()
         );
     }

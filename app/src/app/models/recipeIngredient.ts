@@ -1,6 +1,6 @@
 import { Ingredient } from "./ingredient";
 
-export class StoreIngredient {
+export class RecipeIngredient {
     constructor(
         public quantity: number,
         public ingredient: Ingredient

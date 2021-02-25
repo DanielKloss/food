@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   constructor(private recipeService: RecipeService, private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.recipeService.getRecipes().subscribe(data => this.recipes = data);
+    this.recipeService.getRecipes().subscribe(data => { this.recipes = data; console.log(this.recipes) });
     this.storeService.getStoresAndQuantities().subscribe(data => this.stores = data);
   }
 
