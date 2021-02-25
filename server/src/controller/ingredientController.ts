@@ -31,12 +31,12 @@ export class IngredientController {
                         .where("storeId = :storeId and ingredientId = :ingredientId", { storeId: storeIngredient.store.id, ingredientId: ingredientId })
                         .execute()
                 } else {
-                    console.log("Store Ingredient > 0 and doesn't exist - inserting");
                     let storeIngredientRepo = getRepository(StoreIngredient);
                     let newStoreIngredient = new StoreIngredient();
                     newStoreIngredient.ingredientId = ingredientId;
                     newStoreIngredient.storeId = storeIngredient.store.id;
                     newStoreIngredient.quantity = storeIngredient.quantity;
+                    console.log("Store Ingredient > 0 and doesn't exist - inserting " + newStoreIngredient);
                     await storeIngredientRepo.save(newStoreIngredient)
                 }
             }
