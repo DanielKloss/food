@@ -74,7 +74,7 @@ export class IngredientController {
             let ingredient = await ingredientRepo.save(request.body);
             console.log("ingredient saved " + ingredient.name);
 
-            for (const storeIngredient of request.body.storeIngredients) {
+            for (const storeIngredient of request.body.storeIngredient) {
                 if (storeIngredient.quantity != undefined && storeIngredient.quantity > 0){
                     console.log("store ingredient more than 0")
                     let newStoreIngredient = new StoreIngredient();
