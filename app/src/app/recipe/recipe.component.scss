@@ -1,0 +1,23 @@
+::ng-deep .mat-slider-wrapper {
+
+    .mat-slider-thumb-container {
+      .mat-slider-thumb-label {
+        width: 50px;
+        height: 50px;
+        top: -62px;
+        right: -25px;
+      }
+    }
+  }
+
+  mat-drawer-container{
+      height: 100%;
+  }
+
+  mat-checkbox{
+      display: block;
+  }
+
+  mat-slider{
+      display: block;
+  }

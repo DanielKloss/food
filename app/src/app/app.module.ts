@@ -17,17 +17,23 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { StoreComponent } from './store/store.component';
 import { IngredientDialog } from './dialogs/ingredient.dialog';
+import { FormatCookingTimeLabel, RecipeComponent } from './recipe/recipe.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, 
-    HomeComponent,
-    IngredientDialog
+    StoreComponent,
+    IngredientDialog,
+    RecipeComponent,
+    FormatCookingTimeLabel
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,10 @@ import { IngredientDialog } from './dialogs/ingredient.dialog';
     MatTableModule,
     MatDialogModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

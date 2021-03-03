@@ -1,0 +1,48 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" opened>
+        <h1>RECIPES</h1>
+        <mat-form-field class="example-form-field">
+            <mat-label>search</mat-label>
+            <input matInput type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterChanged()">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="haveIngredients" (ngModelChange)="filterChanged()">Have Ingredients</mat-checkbox>
+        <mat-slider [max]="maxCookingTime" [min]="minCookingTime" step="10" thumbLabel [displayWith]="formatCookingTimeLabel" [(ngModel)]="cookingTime" (ngModelChange)="filterChanged()"></mat-slider>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle *ngFor="let recipe of recipes">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{recipe.name}} - {{recipe.cookingTime | formatCookingTimeLabel}} 
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-chip-list disabled>
+                        <mat-chip *ngFor="let tag of recipe.tag">
+                            {{tag.name}}
+                        </mat-chip>
+                    </mat-chip-list>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>Ingredients</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p *ngFor="let recipeIngredient of recipe.recipeIngredient">{{recipeIngredient.ingredient.name}} - {{recipeIngredient.quantity}}{{recipeIngredient.ingredient.unit.symbol}}</p>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>Method</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p *ngFor="let instruction of recipe.instruction">{{instruction.description}}</p>
+                    </mat-card-content>
+                </mat-card>
+              </mat-expansion-panel>
+        </mat-accordion>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+
+

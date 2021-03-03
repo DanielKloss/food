@@ -1,0 +1,19 @@
+<h1>STORES</h1>
+
+<mat-accordion multi>
+    <mat-expansion-panel expanded *ngFor="let store of stores">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{store.name}}
+            <button mat-icon-button (click)="addIngredient(store)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-chip-list>
+        <mat-chip *ngFor="let storeIngredient of store.storeIngredient" (click)="openIngredientChange(storeIngredient)">
+            {{storeIngredient.ingredient.name}} - {{storeIngredient.quantity}}{{storeIngredient.ingredient.unit.symbol}}
+        </mat-chip>
+    </mat-chip-list>
+    </mat-expansion-panel>
+</mat-accordion>

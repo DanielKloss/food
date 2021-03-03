@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Ingredient } from "../models/ingredient";
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-dialog',
     templateUrl: 'ingredient.dialog.html',
   })
   export class IngredientDialog {

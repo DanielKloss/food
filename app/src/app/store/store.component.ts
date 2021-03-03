@@ -3,28 +3,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { IngredientDialog } from '../dialogs/ingredient.dialog';
 import { Ingredient } from '../models/ingredient';
 import { IngredientStore } from '../models/ingredientStore';
-import { Recipe } from '../models/recipe';
 import { Store } from '../models/store';
 import { StoreIngredient } from '../models/storeIngredient';
 import { Unit } from '../models/unit';
 import { IngredientService } from '../services/ingredient.service';
-import { RecipeService } from '../services/recipe.service';
 import { StoreService } from '../services/store.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-store',
+  templateUrl: './store.component.html',
+  styleUrls: ['./store.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class StoreComponent implements OnInit {
 
   stores: Store[];
-  recipes: Recipe[];
 
-  constructor(private recipeService: RecipeService, private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog) { }
+  constructor(private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.recipeService.getRecipes().subscribe(data => { this.recipes = data; console.log(this.recipes) });
     this.storeService.getStoresAndQuantities().subscribe(data => this.stores = data);
   }
 
