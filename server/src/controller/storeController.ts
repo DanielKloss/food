@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { createQueryBuilder, getRepository } from "typeorm";
 import { Store } from "../entity/store";
+import { StoreIngredient } from "../entity/storeIngredient";
 
 export class StoreController {
 
@@ -20,4 +21,10 @@ export class StoreController {
         );
     }
 
+    static async GetAllQuantities(request: Request, response: Response) {
+        response.send(
+            await createQueryBuilder<StoreIngredient>("StoreIngredient")
+            .getMany()
+        )
+    }
 }

@@ -23,6 +23,7 @@ createConnection().then(async () => {
 
     app.get("/api/stores", StoreController.GetAllStores);
     app.get("/api/storesAndQuantities", StoreController.GetAllStoresAndQuantities);
+    app.get("/api/quantities", StoreController.GetAllQuantities);
 
     app.get("/api/ingredientAndStores", IngredientController.getIngredientandStores);
     app.put("/api/updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
