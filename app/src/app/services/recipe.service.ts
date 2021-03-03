@@ -13,4 +13,8 @@ export class RecipeService {
   getRecipes(): Observable<Recipe[]>{
     return this.http.get<Recipe[]>("http://192.168.0.229/api/recipes");
   }
+
+  addRecipe(recipe: Recipe) {
+    return this.http.post<Recipe>("http://192.168.0.229/api/recipe", recipe);
+  }
 }

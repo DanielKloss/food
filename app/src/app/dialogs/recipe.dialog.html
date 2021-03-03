@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Add Recipe</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Recipe Name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cooking Time</mat-label>
+    <input matInput [(ngModel)]="data.cookingTime">
+  </mat-form-field>
+  <table *ngFor="let ingredient of ingredients; let i = index; trackBy: trackByFunctionIngredient">
+    <tr>
+      <td>
+        <mat-form-field class="twoColumn">
+          <mat-label>Ingredient</mat-label>
+          <input matInput [(ngModel)]="ingredients[i][1]">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput [(ngModel)]="ingredients[i][0]">
+        </mat-form-field>
+    </td>
+  </tr>
+</table>
+  <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+    <mat-form-field *ngFor="let instruction of instructions; let i = index; trackBy: trackByFunctionInstruction">
+        <mat-label>Instruction</mat-label>
+        <input matInput [(ngModel)]="instructions[i]">
+    </mat-form-field>
+  <button mat-raised-button color="primary" (click)="addInstruction()">Add Instruction</button>
+  <mat-form-field>
+    <mat-label>Tags</mat-label>
+    <input matInput [(ngModel)]="tags">
+</mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button (click)="noClick()">Cancel</button>
+  <button mat-button (click)="yesClick()" [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>

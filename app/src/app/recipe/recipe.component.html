@@ -6,7 +6,9 @@
             <input matInput type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterChanged()">
         </mat-form-field>
         <mat-checkbox [(ngModel)]="haveIngredients" (ngModelChange)="filterChanged()">Have Ingredients</mat-checkbox>
+        <mat-label>Cooking Time</mat-label>
         <mat-slider [max]="maxCookingTime" [min]="minCookingTime" step="10" thumbLabel [displayWith]="formatCookingTimeLabel" [(ngModel)]="cookingTime" (ngModelChange)="filterChanged()"></mat-slider>
+        <button mat-raised-button color="primary" (click)="addRecipe()">Add Recipe</button>
     </mat-drawer>
     <mat-drawer-content>
         <mat-accordion>

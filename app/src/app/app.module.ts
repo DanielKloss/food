@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -23,16 +24,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppComponent } from './app.component';
 import { StoreComponent } from './store/store.component';
-import { IngredientDialog } from './dialogs/ingredient.dialog';
 import { FormatCookingTimeLabel, RecipeComponent } from './recipe/recipe.component';
+import { IngredientDialog } from './dialogs/ingredient.dialog';
+import { RecipeDialog } from './dialogs/recipe.dialog';
 
 
 @NgModule({
   declarations: [
     AppComponent, 
     StoreComponent,
-    IngredientDialog,
     RecipeComponent,
+    IngredientDialog,
+    RecipeDialog,
     FormatCookingTimeLabel
   ],
   imports: [
@@ -41,6 +44,7 @@ import { FormatCookingTimeLabel, RecipeComponent } from './recipe/recipe.compone
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatGridListModule,
     MatCardModule,
     MatChipsModule,

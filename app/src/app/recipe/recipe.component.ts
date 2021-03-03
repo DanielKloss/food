@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { RecipeDialog } from '../dialogs/recipe.dialog';
 import { Recipe } from '../models/recipe';
 import { StoreIngredient } from '../models/storeIngredient';
 import { RecipeService } from '../services/recipe.service';
@@ -34,9 +36,14 @@ export class RecipeComponent implements OnInit {
   maxCookingTime: number;
   cookingTime: number;
 
-  constructor(private recipeService: RecipeService, private storeService: StoreService) { }
+  constructor(private recipeService: RecipeService, private storeService: StoreService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.getAllRecipes();
+    this.storeService.getQuantities().subscribe(data => {this.storeIngredients = data});
+  }
+
+  getAllRecipes(): void {
     this.recipeService.getRecipes().subscribe(data => { 
       this.allRecipes = data;
       this.recipes = this.allRecipes; 
@@ -44,7 +51,6 @@ export class RecipeComponent implements OnInit {
       this.minCookingTime = 1
       this.cookingTime = this.maxCookingTime;
     });
-    this.storeService.getQuantities().subscribe(data => {this.storeIngredients = data});
   }
 
   findMinCookingTime(): number{
@@ -65,6 +71,19 @@ export class RecipeComponent implements OnInit {
       }
     }
     return highest;
+  }
+
+  addRecipe(){
+    const dialogRef = this.dialog.open(RecipeDialog, {
+      width: '450px',
+      data: new Recipe("", 0, [], [], [])
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined){
+        this.getAllRecipes();
+      }
+    });
   }
 
   filterChanged(){
@@ -95,7 +114,6 @@ export class RecipeComponent implements OnInit {
   }
 
   searchByHasIngredients(){
-    console.log(this.storeIngredients);
     if (this.haveIngredients){
       for (let i = this.recipes.length - 1; i >= 0; i--){
         for (const recipeIngredient of this.recipes[i].recipeIngredient) {
