@@ -7,6 +7,8 @@ import { RecipeIngredient } from "../entity/recipeIngredient";
 import { Tag } from "../entity/tag";
 import { Unit } from "../entity/unit";
 
+const util = require('util')
+
 export class RecipeController {
 
     static async GetAllRecipes(request: Request, response: Response){
@@ -54,7 +56,8 @@ export class RecipeController {
     }
 
     static async InsertRecipe(request: Request, response: Response){
-        console.log("Adding recipe!" + request.body);
+        console.log("Adding recipe!");
+        util.inspect(request.body, false, null, true);
         let recipeRepo = getRepository(Recipe);
         let tagRepo = getRepository(Tag);
         let instructionRepo = getRepository(Instruction);
@@ -83,14 +86,14 @@ export class RecipeController {
 
         await recipeRepo.save(request.body);
 
-        for (let i = 0; i < request.body.recipeIngredients.length; i++) {
-            let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredients[i].name})
+        for (let i = 0; i < request.body.recipeIngredient.length; i++) {
+            let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredient[i].name})
             if (ingredient == undefined){
-                let unit = await unitRepo.findOne({name: request.body.recipeIngredients[i].unit.name})
+                let unit = await unitRepo.findOne({name: request.body.recipeIngredient[i].unit.name})
                 if (unit){
-                    request.body.recipeIngredients[i].unit.id = unit.id;
+                    request.body.recipeIngredient[i].unit.id = unit.id;
                 }
-                ingredient = await ingredientRepo.save(request.body.recipeIngredients[i]);
+                ingredient = await ingredientRepo.save(request.body.recipeIngredient[i]);
             }
             
             let recipeIngredient = new RecipeIngredient();
