@@ -9,7 +9,52 @@ import { Unit } from "../entity/unit";
 
 export class RecipeController {
 
+    static async GetAllRecipes(request: Request, response: Response){
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
+            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
+            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
+            .innerJoinAndSelect("ingredient.unit", "unit")
+            .innerJoinAndSelect("Recipe.instruction", "instruction")
+            .innerJoinAndSelect("Recipe.tag", "tag")
+            .orderBy("Recipe.name")
+            .getMany()
+        );
+    }
+
+    static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
+            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
+            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
+            .innerJoinAndSelect("ingredient.unit", "unit")
+            .innerJoinAndSelect("Recipe.instruction", "instruction")
+            .where("Recipe.name = :name", {name: request.body.recipeName})
+            .getOne()
+        );
+    }
+
+    static async GetRecipesByTag(request: Request, response:Response){
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
+            .innerJoinAndSelect("Recipe.tag", "tag")
+            .where("tag.name = :name", {name: request.body.tagName})
+            .getMany()
+        );
+    }
+
+    static async GetRecipesByIngredient(request: Request, response:Response){
+        response.send(
+            await createQueryBuilder<Recipe>("Recipe")
+            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
+            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
+            .where("ingredient.name = :name", {name: request.body.ingredientName})
+            .getMany()
+        );
+    }
+
     static async InsertRecipe(request: Request, response: Response){
+        console.log("Adding recipe!");
         let recipeRepo = getRepository(Recipe);
         let tagRepo = getRepository(Tag);
         let instructionRepo = getRepository(Instruction);
@@ -58,49 +103,5 @@ export class RecipeController {
 
         response.status(200);
         response.send(request.body.recipe);
-    }
-
-    static async GetAllRecipes(request: Request, response: Response){
-        response.send(
-            await createQueryBuilder<Recipe>("Recipe")
-            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
-            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
-            .innerJoinAndSelect("ingredient.unit", "unit")
-            .innerJoinAndSelect("Recipe.instruction", "instruction")
-            .innerJoinAndSelect("Recipe.tag", "tag")
-            .orderBy("Recipe.name")
-            .getMany()
-        );
-    }
-
-    static async GetRecipeIngredientsAndInstructionsByName (request: Request, response: Response){
-        response.send(
-            await createQueryBuilder<Recipe>("Recipe")
-            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
-            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
-            .innerJoinAndSelect("ingredient.unit", "unit")
-            .innerJoinAndSelect("Recipe.instruction", "instruction")
-            .where("Recipe.name = :name", {name: request.body.recipeName})
-            .getOne()
-        );
-    }
-
-    static async GetRecipesByTag(request: Request, response:Response){
-        response.send(
-            await createQueryBuilder<Recipe>("Recipe")
-            .innerJoinAndSelect("Recipe.tag", "tag")
-            .where("tag.name = :name", {name: request.body.tagName})
-            .getMany()
-        );
-    }
-
-    static async GetRecipesByIngredient(request: Request, response:Response){
-        response.send(
-            await createQueryBuilder<Recipe>("Recipe")
-            .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
-            .innerJoinAndSelect("recipeIngredient.ingredient", "ingredient")
-            .where("ingredient.name = :name", {name: request.body.ingredientName})
-            .getMany()
-        );
     }
 }
