@@ -54,7 +54,7 @@ export class RecipeController {
     }
 
     static async InsertRecipe(request: Request, response: Response){
-        console.log("Adding recipe!");
+        console.log("Adding recipe!" + request.body);
         let recipeRepo = getRepository(Recipe);
         let tagRepo = getRepository(Tag);
         let instructionRepo = getRepository(Instruction);
@@ -62,26 +62,26 @@ export class RecipeController {
         let unitRepo = getRepository(Unit);
         let recipeIngredientRepo = getRepository(RecipeIngredient);
 
-        let recipe = await recipeRepo.findOne({name: request.body.recipe.name});
+        let recipe = await recipeRepo.findOne({name: request.body.name});
         if (recipe != undefined){
             throw "Recipe already exists";
         }
         
-        for (const tag of request.body.recipe.tag) {
+        for (const tag of request.body.tag) {
             let foundTag = await tagRepo.findOne({name: tag.name});
             if (foundTag){
                 tag.id = foundTag.id;
             }
         }
 
-        for (const instruction of request.body.recipe.instruction) {
+        for (const instruction of request.body.instruction) {
             let foundInstruction = await instructionRepo.findOne({description: instruction.description});
             if (foundInstruction) {
                 instruction.id = foundInstruction.id;
             }
         }
 
-        await recipeRepo.save(request.body.recipe);
+        await recipeRepo.save(request.body);
 
         for (let i = 0; i < request.body.recipeIngredients.length; i++) {
             let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredients[i].name})
@@ -95,7 +95,7 @@ export class RecipeController {
             
             let recipeIngredient = new RecipeIngredient();
             recipeIngredient.ingredientId = ingredient.id;
-            recipeIngredient.recipeId = request.body.recipe.id;
+            recipeIngredient.recipeId = request.body.id;
             recipeIngredient.quantity = request.body.quantities[i];
                                 
             await recipeIngredientRepo.save(recipeIngredient);
