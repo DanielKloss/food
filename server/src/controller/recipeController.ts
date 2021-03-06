@@ -57,7 +57,7 @@ export class RecipeController {
 
     static async InsertRecipe(request: Request, response: Response){
         console.log("Adding recipe!");
-        console.log(util.inspect(request, false, null, true));
+        console.log(util.inspect(request.body, false, null, true));
         let recipeRepo = getRepository(Recipe);
         let tagRepo = getRepository(Tag);
         let instructionRepo = getRepository(Instruction);
@@ -84,22 +84,22 @@ export class RecipeController {
             }
         }
 
-        await recipeRepo.save(request.body);
+        recipe = await recipeRepo.save(request.body);
 
         for (let i = 0; i < request.body.recipeIngredient.length; i++) {
-            let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredient[i].name})
+            let ingredient = await ingredientRepo.findOne({name: request.body.recipeIngredient[i].ingredient.name})
             if (ingredient == undefined){
-                let unit = await unitRepo.findOne({name: request.body.recipeIngredient[i].unit.name})
+                let unit = await unitRepo.findOne({name: request.body.recipeIngredient[i].ingredient.unit.name})
                 if (unit){
-                    request.body.recipeIngredient[i].unit.id = unit.id;
+                    request.body.recipeIngredient[i].ingredient.unit.id = unit.id;
                 }
-                ingredient = await ingredientRepo.save(request.body.recipeIngredient[i]);
+                ingredient = await ingredientRepo.save(request.body.recipeIngredient[i].ingredient);
             }
             
             let recipeIngredient = new RecipeIngredient();
             recipeIngredient.ingredientId = ingredient.id;
-            recipeIngredient.recipeId = request.body.id;
-            recipeIngredient.quantity = request.body.quantities[i];
+            recipeIngredient.recipeId = recipe.id;
+            recipeIngredient.quantity = request.body.recipeIngredient[i].quantity;
                                 
             await recipeIngredientRepo.save(recipeIngredient);
         }
