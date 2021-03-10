@@ -10,6 +10,14 @@ export class IngredientController {
 
 //util.inspect(newStoreIngredient, false, null, true)
 
+    static async getAllIngredients(request: Request, response: Response) {
+        response.send(
+            await createQueryBuilder<Ingredient>("Ingredient")
+            .leftJoinAndSelect("Ingredient.unit", "unit")
+            .getMany()
+        )
+    }
+
     static async UpdateIngredient(storeIngredients: StoreIngredient[], ingredientId: number){
         for (const storeIngredient of storeIngredients) {
             let exisitingStoreIngredient = await createQueryBuilder<StoreIngredient>("StoreIngredient")
