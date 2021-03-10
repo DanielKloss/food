@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe';
@@ -8,6 +8,10 @@ import { Recipe } from '../models/recipe';
 })
 export class RecipeService {
 
+  headers = new HttpHeaders({
+    'Content-Type':'application/json'
+  })
+
   constructor(private http: HttpClient) { }
 
   getRecipes(): Observable<Recipe[]>{
@@ -15,6 +19,6 @@ export class RecipeService {
   }
 
   addRecipe(recipe: Recipe) {
-    return this.http.post<Recipe>("http://192.168.0.229/api/recipe", recipe);
+    return this.http.post<Recipe>("http://192.168.0.229/api/recipe", recipe, { headers: this.headers });
   }
 }

@@ -81,7 +81,9 @@ export class RecipeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
-        this.getAllRecipes();
+        this.recipeService.addRecipe(result).subscribe(() => {
+          this.getAllRecipes();
+        })
       }
     });
   }

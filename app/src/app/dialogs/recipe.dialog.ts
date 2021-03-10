@@ -5,6 +5,8 @@ import { Ingredient } from "../models/ingredient";
 import { Recipe } from "../models/recipe";
 import { RecipeIngredient } from "../models/recipeIngredient";
 import { Tag } from "../models/tag";
+import { Unit } from "../models/unit";
+import { IngredientService } from "../services/ingredient.service";
 
 @Component({ 
     selector: 'app-dialog',
@@ -14,21 +16,58 @@ import { Tag } from "../models/tag";
   export class RecipeDialog {
 
     name: string;
-    ingredients: [number, string][] = [[0,""]];
+    ingredients: [number, string, string, string][] = [[0,"", "", ""]];
     instructions: string[] = [""];
     tags: string;
   
-    constructor(public dialogRef: MatDialogRef<RecipeDialog>, @Inject(MAT_DIALOG_DATA) public data: Recipe) {
+    allIngredients: Ingredient[];
+    allUnits: Unit[];
+
+    constructor(public dialogRef: MatDialogRef<RecipeDialog>, @Inject(MAT_DIALOG_DATA) public data: Recipe, private ingredientService: IngredientService) {
     }
-  
-    ngOnInit() { }
+
+    ngOnInit() { 
+        this.ingredientService.getAllIngredients().subscribe(data => this.allIngredients = data);
+        this.ingredientService.getAllUnits().subscribe(data => this.allUnits = data);
+    }
 
     addIngredient(){
-        this.ingredients.push([0,""]);
+        this.ingredients.push([0,"", "", ""]);
     }
 
     addInstruction(){
         this.instructions.push("");
+    }
+
+    ingredientChanged(ingredientChangedIndex: number){
+        let ingredient = this.allIngredients.find(ingred => ingred.name == this.ingredients[ingredientChangedIndex][1]);
+
+        if (ingredient == undefined){
+            return;
+        } else {
+            this.ingredients[ingredientChangedIndex][2] = ingredient.unit.name;
+            this.ingredients[ingredientChangedIndex][3] = ingredient.unit.symbol;
+        }
+    }
+
+    unitChanged(ingredientChangedIndex: number){
+        let unit = this.allUnits.find(unit => unit.name == this.ingredients[ingredientChangedIndex][2]);
+
+        if (unit == undefined){
+            return;
+        } else {
+            this.ingredients[ingredientChangedIndex][3] = unit.symbol;
+        }
+    }
+
+    symbolChanged(ingredientChangedIndex: number){
+        let unit = this.allUnits.find(unit => unit.symbol == this.ingredients[ingredientChangedIndex][3]);
+
+        if (unit == undefined){
+            return;
+        } else {
+            this.ingredients[ingredientChangedIndex][2] = unit.name;
+        }
     }
       
     trackByFunctionIngredient(index: number) {
@@ -58,7 +97,7 @@ import { Tag } from "../models/tag";
         }
         
         for (const recipeIngredient of this.ingredients) {
-            this.data.recipeIngredient.push(new RecipeIngredient(recipeIngredient[0], new Ingredient(-1, this.capitaliseFirstLetter(recipeIngredient[1]), null!, [])));
+            this.data.recipeIngredient.push(new RecipeIngredient(recipeIngredient[0], new Ingredient(this.capitaliseFirstLetter(recipeIngredient[1]), new Unit(recipeIngredient[2], recipeIngredient[3]), [])));
         }
 
         if(this.tags != ""){

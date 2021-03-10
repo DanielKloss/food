@@ -11,9 +11,9 @@
   <table *ngFor="let ingredient of ingredients; let i = index; trackBy: trackByFunctionIngredient">
     <tr>
       <td>
-        <mat-form-field class="twoColumn">
+        <mat-form-field>
           <mat-label>Ingredient</mat-label>
-          <input matInput [(ngModel)]="ingredients[i][1]">
+          <input matInput (change)="ingredientChanged(i)" [(ngModel)]="ingredients[i][1]">
         </mat-form-field>
       </td>
       <td>
@@ -21,6 +21,18 @@
             <mat-label>Quantity</mat-label>
             <input matInput [(ngModel)]="ingredients[i][0]">
         </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field>
+          <mat-label>Unit</mat-label>
+          <input matInput (change)="unitChanged(i)" [(ngModel)]="ingredients[i][2]">
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field>
+          <mat-label>Symbol</mat-label>
+          <input matInput (change)="symbolChanged(i)" [(ngModel)]="ingredients[i][3]">
+      </mat-form-field>
     </td>
   </tr>
 </table>

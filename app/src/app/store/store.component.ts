@@ -50,7 +50,7 @@ export class StoreComponent implements OnInit {
   addIngredient(storeToAddTo: Store): void {
     const dialogRef = this.dialog.open(IngredientDialog, {
       width: '300px',
-      data: new Ingredient(0, "", new Unit("", ""), [new IngredientStore(0, storeToAddTo)])
+      data: new Ingredient("", new Unit("", ""), [new IngredientStore(0, storeToAddTo)])
     });
 
     dialogRef.afterClosed().subscribe(result => {
