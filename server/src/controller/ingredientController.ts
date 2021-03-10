@@ -8,13 +8,20 @@ const util = require('util')
 
 export class IngredientController {
 
-//util.inspect(newStoreIngredient, false, null, true)
+    //util.inspect(newStoreIngredient, false, null, true)
 
     static async getAllIngredients(request: Request, response: Response) {
         response.send(
             await createQueryBuilder<Ingredient>("Ingredient")
             .leftJoinAndSelect("Ingredient.unit", "unit")
             .getMany()
+        )
+    }
+
+    static async getAllUnits(request: Request, response: Response) {
+        response.send(
+            await createQueryBuilder<Unit>("Unit")
+                .getMany()
         )
     }
 
