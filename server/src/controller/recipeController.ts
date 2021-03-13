@@ -56,8 +56,6 @@ export class RecipeController {
     }
 
     static async InsertRecipe(request: Request, response: Response){
-        console.log("Adding recipe!");
-        console.log(util.inspect(request.body, false, null, true));
         let recipeRepo = getRepository(Recipe);
         let tagRepo = getRepository(Tag);
         let instructionRepo = getRepository(Instruction);
