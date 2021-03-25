@@ -41,6 +41,7 @@
                         <p *ngFor="let instruction of recipe.instruction">{{instruction.description}}</p>
                     </mat-card-content>
                 </mat-card>
+                <button mat-raised-button color="primary" (click)="makeRecipe(recipe)">Make Recipe</button>
               </mat-expansion-panel>
         </mat-accordion>
     </mat-drawer-content>

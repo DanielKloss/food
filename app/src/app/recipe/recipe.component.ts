@@ -2,8 +2,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipeDialog } from '../dialogs/recipe.dialog';
+import { Ingredient } from '../models/ingredient';
 import { Recipe } from '../models/recipe';
 import { StoreIngredient } from '../models/storeIngredient';
+import { Unit } from '../models/unit';
+import { IngredientService } from '../services/ingredient.service';
 import { RecipeService } from '../services/recipe.service';
 import { StoreService } from '../services/store.service';
 
@@ -36,7 +39,7 @@ export class RecipeComponent implements OnInit {
   maxCookingTime: number;
   cookingTime: number;
 
-  constructor(private recipeService: RecipeService, private storeService: StoreService, public dialog: MatDialog) { }
+  constructor(private recipeService: RecipeService, private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAllRecipes();
@@ -88,6 +91,26 @@ export class RecipeComponent implements OnInit {
     });
   }
 
+  makeRecipe(recipeToMake: Recipe){
+    for (const recipeIngredient of recipeToMake.recipeIngredient) {
+      let recipeQuantity = recipeIngredient.quantity;
+      let ingredientStocks = this.storeIngredients.filter(r => r.ingredientId == recipeIngredient.ingredient.id);
+
+      for (const stock of ingredientStocks) {
+        if (stock.quantity < recipeQuantity){
+          recipeQuantity -= stock.quantity;
+          stock.quantity = 0;
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => console.log("Recipe made"));
+        } else {
+          stock.quantity -= recipeQuantity;
+          recipeQuantity = 0;
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => console.log("Recipe made"));;
+          break;          
+        }
+      }
+    }
+  }
+
   filterChanged(){
     if (this.searchTerm == "" && !this.haveIngredients && this.cookingTime == this.maxCookingTime){
       this.recipes = this.allRecipes;
@@ -104,9 +127,9 @@ export class RecipeComponent implements OnInit {
       this.recipes = this.allRecipes;
     } else {
       this.recipes = this.allRecipes.filter((recipe) => {
-        return recipe.name.includes(this.searchTerm) || 
-        recipe.tag.some((tag) => { return tag.name.includes(this.searchTerm) }) || 
-        recipe.recipeIngredient.some((ingredient) => { return ingredient.ingredient.name.includes(this.searchTerm) });
+        return recipe.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
+        recipe.tag.some((tag) => { return tag.name.toLowerCase().includes(this.searchTerm.toLowerCase()) }) || 
+        recipe.recipeIngredient.some((ingredient) => { return ingredient.ingredient.name.toLowerCase().includes(this.searchTerm.toLowerCase()) });
       });
     }
   }

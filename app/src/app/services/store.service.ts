@@ -10,17 +10,19 @@ import { map } from 'rxjs/operators';
 })
 export class StoreService {
 
+  url = "http://192.168.1.229/api/";
+
   constructor(private http: HttpClient) { }
 
   getStores() {
-    return this.http.get<StoreIngredient[]>("http://192.168.0.229/api/stores");
+    return this.http.get<StoreIngredient[]>(this.url + "stores");
   }
 
   getQuantities(): Observable<StoreIngredient[]> {
-    return this.http.get<StoreIngredient[]>("http://192.168.0.229/api/quantities");
+    return this.http.get<StoreIngredient[]>(this.url + "quantities");
   }
 
   getStoresAndQuantities(): Observable<Store[]>{
-    return this.http.get<Store[]>("http://192.168.0.229/api/storesAndQuantities");
+    return this.http.get<Store[]>(this.url + "storesAndQuantities");
   }
 }

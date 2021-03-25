@@ -7,6 +7,8 @@ import { Recipe } from '../models/recipe';
   providedIn: 'root'
 })
 export class RecipeService {
+  
+  url = "http://192.168.1.229/api/";
 
   headers = new HttpHeaders({
     'Content-Type':'application/json'
@@ -15,10 +17,10 @@ export class RecipeService {
   constructor(private http: HttpClient) { }
 
   getRecipes(): Observable<Recipe[]>{
-    return this.http.get<Recipe[]>("http://192.168.0.229/api/recipes");
+    return this.http.get<Recipe[]>(this.url + "recipes");
   }
 
   addRecipe(recipe: Recipe) {
-    return this.http.post<Recipe>("http://192.168.0.229/api/recipe", recipe, { headers: this.headers });
+    return this.http.post<Recipe>(this.url + "recipe", recipe, { headers: this.headers });
   }
 }
