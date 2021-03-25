@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RecipeDialog } from '../dialogs/recipe.dialog';
 import { Ingredient } from '../models/ingredient';
 import { Recipe } from '../models/recipe';
@@ -39,7 +40,7 @@ export class RecipeComponent implements OnInit {
   maxCookingTime: number;
   cookingTime: number;
 
-  constructor(private recipeService: RecipeService, private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog) { }
+  constructor(private recipeService: RecipeService, private storeService: StoreService, private ingredientService: IngredientService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllRecipes();
@@ -100,11 +101,11 @@ export class RecipeComponent implements OnInit {
         if (stock.quantity < recipeQuantity){
           recipeQuantity -= stock.quantity;
           stock.quantity = 0;
-          this.ingredientService.updateIngredientStock(stock).subscribe(() => console.log("Recipe made"));
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK"));
         } else {
           stock.quantity -= recipeQuantity;
           recipeQuantity = 0;
-          this.ingredientService.updateIngredientStock(stock).subscribe(() => console.log("Recipe made"));;
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK"));
           break;          
         }
       }

@@ -76,9 +76,9 @@ export class IngredientController {
     static async UpdateIngredientStock(request: Request, response: Response) {
         let storeIngredientRepo = getRepository(StoreIngredient);
         if (request.body.quantity == 0){
-            await storeIngredientRepo.delete([request.body.ingredientId, request.body.storeId]);
+            response.send(await storeIngredientRepo.delete([request.body.ingredientId, request.body.storeId]));
         } else {
-            await storeIngredientRepo.update({ ingredientId: request.body.ingredientId, storeId: request.body.storeId }, { quantity: request.body.quantity });
+            response.send(await storeIngredientRepo.update({ ingredientId: request.body.ingredientId, storeId: request.body.storeId }, { quantity: request.body.quantity }));
         }
     }
 
