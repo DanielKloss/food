@@ -29,7 +29,7 @@ createConnection().then(async () => {
     app.get("/api/units", IngredientController.getAllUnits);
     app.get("/api/ingredientAndStores", IngredientController.getIngredientandStores);
     app.put("/api/updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
-    app.put("/api/unpdateIngredientStock", IngredientController.UpdateIngredientStock);
+    app.put("/api/updateIngredientStock", IngredientController.UpdateIngredientStock);
     app.post("/api/insertIngredient", IngredientController.InsertIngredient);
 
     app.listen(port, () => {
