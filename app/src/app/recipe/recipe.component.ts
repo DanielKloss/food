@@ -101,11 +101,11 @@ export class RecipeComponent implements OnInit {
         if (stock.quantity < recipeQuantity){
           recipeQuantity -= stock.quantity;
           stock.quantity = 0;
-          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK"));
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK", {duration: 2000}));
         } else {
           stock.quantity -= recipeQuantity;
           recipeQuantity = 0;
-          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK"));
+          this.ingredientService.updateIngredientStock(stock).subscribe(() => this.snackBar.open("Recipe Made - Ingredients removed from stores", "OK", {duration: 2000}));
           break;          
         }
       }
