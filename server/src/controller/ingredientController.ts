@@ -80,7 +80,7 @@ export class IngredientController {
         if (request.body.quantity == 0){
             await storeIngredientRepo.delete([request.body.ingredientId, request.body.storeId]);
         } else {
-            await storeIngredientRepo.update({ quantity: request.body.quantity }, { ingredientId: request.body.ingredientId, storeId: request.body.storeId });
+            await storeIngredientRepo.update({ ingredientId: request.body.ingredientId, storeId: request.body.storeId }, { quantity: request.body.quantity });
         }
     }
 
