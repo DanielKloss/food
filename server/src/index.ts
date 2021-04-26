@@ -15,6 +15,8 @@ createConnection().then(async () => {
     app.use(express.json());
     app.use(express.urlencoded());
 
+    app.options('*', cors())
+
     app.get("/api/recipes", RecipeController.GetAllRecipes);
     app.get("/api/recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
     app.get("/api/recipesByTag", RecipeController.GetRecipesByTag);
