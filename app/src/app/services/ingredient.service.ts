@@ -9,7 +9,7 @@ import { Unit } from '../models/unit';
 })
 export class IngredientService {
 
-  url = "http://192.168.1.229/api/";
+  url = "http://192.168.1.229/food/api/";
 
   headers = new HttpHeaders({
     'Content-Type':'application/json'

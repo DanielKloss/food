@@ -8,7 +8,7 @@ import { Recipe } from '../models/recipe';
 })
 export class RecipeService {
   
-  url = "http://192.168.1.229/api/";
+  url = "http://192.168.1.229/food/api/";
 
   headers = new HttpHeaders({
     'Content-Type':'application/json'
