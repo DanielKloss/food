@@ -15,22 +15,22 @@ createConnection().then(async () => {
     app.use(express.json());
     app.use(express.urlencoded());
 
-    app.get("recipes", RecipeController.GetAllRecipes);
-    app.get("recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
-    app.get("recipesByTag", RecipeController.GetRecipesByTag);
-    app.get("recipesByIngredient", RecipeController.GetRecipesByIngredient);
-    app.post("recipe", RecipeController.InsertRecipe);
+    app.get("food/api/recipes", RecipeController.GetAllRecipes);
+    app.get("food/api/recipeByName", RecipeController.GetRecipeIngredientsAndInstructionsByName);
+    app.get("food/api/recipesByTag", RecipeController.GetRecipesByTag);
+    app.get("food/api/recipesByIngredient", RecipeController.GetRecipesByIngredient);
+    app.post("food/api/recipe", RecipeController.InsertRecipe);
 
-    app.get("stores", StoreController.GetAllStores);
-    app.get("storesAndQuantities", StoreController.GetAllStoresAndQuantities);
-    app.get("quantities", StoreController.GetAllQuantities);
+    app.get("food/api/stores", StoreController.GetAllStores);
+    app.get("food/api/storesAndQuantities", StoreController.GetAllStoresAndQuantities);
+    app.get("food/api/quantities", StoreController.GetAllQuantities);
 
-    app.get("ingredients", IngredientController.getAllIngredients)
-    app.get("units", IngredientController.getAllUnits);
-    app.get("ingredientAndStores", IngredientController.getIngredientandStores);
-    app.put("updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
-    app.put("updateStockIngredient", IngredientController.UpdateIngredientStock);
-    app.post("insertIngredient", IngredientController.InsertIngredient);
+    app.get("food/api/ingredients", IngredientController.getAllIngredients)
+    app.get("food/api/units", IngredientController.getAllUnits);
+    app.get("food/api/ingredientAndStores", IngredientController.getIngredientandStores);
+    app.put("food/api/updateIngredient", IngredientController.UpdateStoreIngredientQuantity);
+    app.put("food/api/updateStockIngredient", IngredientController.UpdateIngredientStock);
+    app.post("food/api/insertIngredient", IngredientController.InsertIngredient);
 
     app.listen(port, () => {
         console.log("server started at localhost: " + port);
