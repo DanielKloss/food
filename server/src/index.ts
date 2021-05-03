@@ -8,7 +8,7 @@ import { StoreController } from "./controller/storeController";
 
 createConnection().then(async () => {
     const app = express();
-    const port = 8080;
+    const port = 8000;
 
     app.use(cors());
 
