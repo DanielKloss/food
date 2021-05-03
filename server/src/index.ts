@@ -32,7 +32,7 @@ createConnection().then(async () => {
     app.put("food/api/updateStockIngredient", IngredientController.UpdateIngredientStock);
     app.post("food/api/insertIngredient", IngredientController.InsertIngredient);
 
-    app.listen(port, () => {
+    app.listen(port, "86.15.198.129", () => {
         console.log("server started at localhost: " + port);
     })
 
