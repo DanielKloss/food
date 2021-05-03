@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class StoreService {
 
-  url = "http://192.168.1.229/food/api/";
+  url = "http://86.15.198.129/food/api/";
 
   constructor(private http: HttpClient) { }
 
