@@ -12,6 +12,7 @@ const util = require('util')
 export class RecipeController {
 
     static async GetAllRecipes(request: Request, response: Response){
+        console.log("getting all recipes");
         response.send(
             await createQueryBuilder<Recipe>("Recipe")
             .innerJoinAndSelect("Recipe.recipeIngredient", "recipeIngredient")
